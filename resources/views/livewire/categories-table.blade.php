@@ -37,7 +37,7 @@
                                 <button wire:click="editCategory(null)" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
                             @else
                                 <button wire:click="editCategory({{ $category->id }})" class="btn btn-primary btn-sm mr-1"><i class="fa fa-edit"></i></button>
-                                <button wire:click="deleteCategory({{ $category->id }})" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
+                                <button wire:click="deleteCategory({{ $category->id }})" onclick="return confirm('¿Está seguro de que desea eliminar esta categoría?')" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i></button>
                             @endif
                         </div>
                     </td>
