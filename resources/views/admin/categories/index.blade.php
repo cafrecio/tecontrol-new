@@ -10,3 +10,5 @@
         @livewire('categories-table')
     </div>
 @endsection
+
+@livewireScripts

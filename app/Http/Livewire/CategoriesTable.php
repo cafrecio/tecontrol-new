@@ -36,6 +36,61 @@ class CategoriesTable extends Component
     $this->categoryDescription = '';
 
     session()->flash('message', 'Categoría agregada correctamente.');
+
+    $this->mount();
+}
+
+public function editCategory($categoryId)
+{
+    $this->selectedCategoryId = $categoryId;
+    $category = Category::find($categoryId);
+    $this->categoryDescription = $category->descripcion;
+}
+
+public function updateCategory()
+{
+    $this->validate([
+        'categoryDescription' => 'required|unique:categories,descripcion,' . $this->selectedCategoryId
+    ]);
+
+    $category = Category::find($this->selectedCategoryId);
+    $category->descripcion = $this->categoryDescription;
+    $category->save();
+
+    $this->selectedCategoryId = null;
+    $this->categoryDescription = '';
+
+    session()->flash('message', 'Categoría actualizada correctamente.');
+
+    $this->mount();
+}
+
+public function deleteCategory($categoryId)
+{
+    $category = Category::find($categoryId);
+    $category->delete();
+
+    session()->flash('message', 'Categoría eliminada correctamente.');
+
+    $this->mount();
+}
+
+
+
+/*    
+    public function addCategory()
+{
+    $this->validate([
+        'categoryDescription' => 'required|unique:categories,descripcion'
+    ]);
+
+    Category::create([
+        'descripcion' => $this->categoryDescription
+    ]);
+
+    $this->categoryDescription = '';
+
+    session()->flash('message', 'Categoría agregada correctamente.');
 }
 
 public function editCategory($categoryId)
@@ -68,8 +123,11 @@ public function deleteCategory($categoryId)
 
     session()->flash('message', 'Categoría eliminada correctamente.');
 }
-
-/*
+*/
+/* public function mount()
+    {
+        $this->categories = Category::all();
+    }
 
     public function addCategory()
     {
