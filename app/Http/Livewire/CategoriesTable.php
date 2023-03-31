@@ -44,8 +44,11 @@ public function editCategory($categoryId)
 {
     $this->selectedCategoryId = $categoryId;
     $category = Category::find($categoryId);
-    $this->categoryDescription = $category->descripcion;
+    if ($category) {
+        $this->categoryDescription = $category->descripcion;
+    }
 }
+
 
 public function updateCategory()
 {
