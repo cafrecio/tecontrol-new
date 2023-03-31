@@ -297,6 +297,7 @@ return [
             'text'         => 'search',
             'topnav_right' => true,
         ], 
+
        /* [
             'type'         => 'fullscreen-widget',
             'topnav_right' => true,
@@ -328,7 +329,7 @@ return [
         ],
         [
             'text'        => 'Categorias',
-            'url'       => 'admin.categorias.index',
+            'route'       => 'admin.categories.index',
             'icon'        => 'fas fa-fw fa-list',
             
         ],

@@ -15,7 +15,7 @@ use App\Http\Controllers\Admin\StockController;
 
 route::get('', [HomeController::class, 'index'])->name('admin.home');
 route::resource('generales', GeneralController::class)->names('admin.generales');
-route::resource('categorias', CategoriaController::class)->names('admin.categorias');
+route::resource('categorias', CategoriaController::class)->names('admin.categories');
 route::resource('productos', ProductoController::class)->names('admin.productos');
 route::resource('clientes', ClienteController::class)->names('admin.clientes');
 route::resource('proveedores', ProveedorController::class)->names('admin.proveedores');
