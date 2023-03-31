@@ -11,76 +11,70 @@ class CategoriesTable extends Component
     public $selectedCategoryId;
     public $categoryDescription;
 
-    public function mount()
-    {
-        $this->categories = Category::all();
-    }
 
     public function render()
     {
+        $this->categories = Category::all();
         return view('livewire.categories-table', [
             'categories' => $this->categories,
         ]);
     }
 
     public function addCategory()
-{
-    $this->validate([
-        'categoryDescription' => 'required|unique:categories,descripcion'
-    ]);
+    {
+        $this->validate([
+            'categoryDescription' => 'required|unique:categories,descripcion'
+        ]);
 
-    Category::create([
-        'descripcion' => $this->categoryDescription
-    ]);
+        Category::create([
+            'descripcion' => $this->categoryDescription
+        ]);
 
-    $this->categoryDescription = '';
+        $this->categoryDescription = '';
 
-    session()->flash('message', 'Categoría agregada correctamente.');
+        session()->flash('message', 'Categoría agregada correctamente.');
 
-    $this->mount();
-}
-
-public function editCategory($categoryId)
-{
-    $this->selectedCategoryId = $categoryId;
-    $category = Category::find($categoryId);
-    if ($category) {
-        $this->categoryDescription = $category->descripcion;
     }
-}
+
+    public function editCategory($categoryId)
+    {
+        $this->selectedCategoryId = $categoryId;
+        $category = Category::find($categoryId);
+        if ($category) {
+            $this->categoryDescription = $category->descripcion;
+        }
+    }
 
 
-public function updateCategory()
-{
-    $this->validate([
-        'categoryDescription' => 'required|unique:categories,descripcion,' . $this->selectedCategoryId
-    ]);
+    public function updateCategory()
+    {
+        $this->validate([
+            'categoryDescription' => 'required|unique:categories,descripcion,' . $this->selectedCategoryId
+        ]);
 
-    $category = Category::find($this->selectedCategoryId);
-    $category->descripcion = $this->categoryDescription;
-    $category->save();
+        $category = Category::find($this->selectedCategoryId);
+        $category->descripcion = $this->categoryDescription;
+        $category->save();
 
-    $this->selectedCategoryId = null;
-    $this->categoryDescription = '';
+        $this->selectedCategoryId = null;
+        $this->categoryDescription = '';
 
-    session()->flash('message', 'Categoría actualizada correctamente.');
+        session()->flash('message', 'Categoría actualizada correctamente.');
 
-    $this->mount();
-}
+    }
 
-public function deleteCategory($categoryId)
-{
-    $category = Category::find($categoryId);
-    $category->delete();
+    public function deleteCategory($categoryId)
+    {
+        $category = Category::find($categoryId);
+        $category->delete();
 
-    session()->flash('message', 'Categoría eliminada correctamente.');
+        session()->flash('message', 'Categoría eliminada correctamente.');
 
-    $this->mount();
-}
+    }
 
 
 
-/*    
+    /*    
     public function addCategory()
 {
     $this->validate([
@@ -127,7 +121,7 @@ public function deleteCategory($categoryId)
     session()->flash('message', 'Categoría eliminada correctamente.');
 }
 */
-/* public function mount()
+    /* public function mount()
     {
         $this->categories = Category::all();
     }
