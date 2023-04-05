@@ -335,7 +335,7 @@ return [
         ],
         [
             'text'        => 'Productos',
-            'url'       => 'admin.productos.index',
+            'route'       => 'admin.products.index',
             'icon'        => 'fas fa-fw fa-boxes',
            
         ],
