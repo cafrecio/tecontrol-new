@@ -12,9 +12,9 @@ class Product extends Model
     protected $fillable = [
         'descripcion_pedido',
         'descripcion_cotizacion',
-        'proveedor_id',
-        'moneda_id',
-        'categoria_id',
+        'proveedor',
+        'moneda',
+        'categoria',
         'precio_compra',
         'precio_venta',
         'punto_pedido',

@@ -57,6 +57,7 @@ class ProductsTable extends Component
             'purchasePrice' => 'required',
             'salePrice' => 'required',            
         ]);
+        
         $newProduct = Product::create([
             'descripcion_pedido' => $this->requisitionDescription,
             'descripcion_cotizacion' => $this->quotationDescription,
@@ -68,6 +69,18 @@ class ProductsTable extends Component
             'punto_pedido' => $this->reorderPoint,
             'stock_inicial' => $this->initialStock,
         ]);
+
+        $this->requisitionDescription = '';
+        $this->quotationDescription = '';
+        $this->supplierId = '';
+        $this->currencyId = '';
+        $this->categoryId = '';
+        $this->purchasePrice = '';
+        $this->salePrice = '';
+        $this->reorderPoint = '';
+        $this->initialStock = '';
+        
+        session()->flash('message', 'Producto agregado correctamente.');
 
         $this->emit('productListUpdated');
     }

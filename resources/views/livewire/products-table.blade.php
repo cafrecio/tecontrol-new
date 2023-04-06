@@ -24,14 +24,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr wire:key="add-product-row">
+                
+                <tr>
                     <td><input type="text" class="form-control" wire:model="requisitionDescription" id="requisitionDescription" placeholder="Ingrese la descripción del pedido"></td>
                     <td><input type="text" class="form-control" wire:model="quotationDescription" id="quotationDescription" placeholder="Ingrese la descripción de la cotización"></td>
                     <td>
                         <select class="form-control" wire:model="supplierId" id="supplierId">
                             <option value="">Seleccione...</option>
                             @foreach ($suppliers as $supplier)
-                                <option value="{{ $supplier->id }}" wire:click="supplierId({{ $supplier->id }})">{{ $supplier->razon_social }}</option>
+                                <option value={{ $supplier->id }}>{{ $supplier->razon_social }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -39,7 +40,7 @@
                         <select class="form-control" wire:model="categoryId" id="categoryId">
                             <option value="">Seleccione...</option>
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }} wire:click="categoryId({{ $category->id }})">{{ $category->descripcion }}</option>
+                                <option value={{ $category->id }}>{{ $category->descripcion }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -47,7 +48,7 @@
                         <select class="form-control" wire:model="currencyId" id="currencyId">
                             <option value="">Seleccione...</option>
                             @foreach ($currencies as $currency)
-                                <option value="{{ $currency->id }} wire:click="currencyId({{ $currency->id }})">{{ $currency->moneda }}</option>
+                                <option value={{ $currency->id }}>{{ $currency->moneda }}</option>
                             @endforeach
                         </select>
                     </td>
@@ -87,28 +88,13 @@
                     <td contenteditable="true" wire:key="descripcion_cotizacion-{{ $product->id }}" wire:blur
                             ="editProduct({{ $product->id }},'descripcion_cotizacion', $event.target.textContent)">{{ $product->descripcion_cotizacion }}</td>
                     <td contenteditable="true" wire:key="proveedor_id-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'proveedor_id', $event.target.textContent)">
-                        <select class="form-control">
-                            <option value="">Seleccione...</option>
-                            @foreach ($suppliers as $supplier)
                             <option value="{{ $supplier->id }}" @if($product->proveedor_id == $supplier->id) selected @endif>{{ $supplier->razon_social }}</option>
-                            @endforeach
-                        </select>
                     </td>
                     <td contenteditable="true" wire:key="categoria_id-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'categoria_id', $event.target.textContent)">
-                        <select class="form-control">
-                            <option value="">Seleccione...</option>
-                            @foreach ($categories as $category)
                             <option value="{{ $category->id }}" @if($product->categoria_id == $category->id) selected @endif>{{ $category->descripcion }}</option>
-                            @endforeach
-                        </select>
                     </td>
                     <td contenteditable="true" wire:key="moneda_id-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'moneda_id', $event.target.textContent)">
-                        <select class="form-control">
-                            <option value="">Seleccione...</option>
-                            @foreach ($currencies as $currency)
                             <option value="{{ $currency->id }}" @if($product->moneda_id == $currency->id) selected @endif>{{ $currency->moneda }}</option>
-                            @endforeach
-                        </select>
                     </td>
                     <td contenteditable="true" wire:key="precio_compra-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'precio_compra', $event.target.textContent)">{{ $product->precio_compra }}</td>
                     <td contenteditable="true" wire:key="precio_venta-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'precio_venta', $event.target.textContent)">{{ $product->precio_venta }}</td>
