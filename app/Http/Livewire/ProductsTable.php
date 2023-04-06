@@ -2,166 +2,95 @@
 
 namespace App\Http\Livewire;
 
-use App\Models\Category;
-use App\Models\Currency;
 use App\Models\Product;
-use App\Models\Supplier;
 use Livewire\Component;
 use Livewire\WithPagination;
+use App\Models\Supplier;
+use App\Models\Category;
+use App\Models\Currency;
 
 class ProductsTable extends Component
 {
     use WithPagination;
 
-    public $search = '';
-    public $supplierFilter = '';
-    public $categoryFilter = '';
-    public $editDescriptionPedido = [];
-    public $editDescriptionCotizacion = [];
-    public $editSupplier = [];
-    public $editCurrency = [];
-    public $editCategory = [];
-    public $editPurchasePrice = [];
-    public $editSalePrice = [];
-    public $editReorderPoint = [];
-    public $editInitialStock = [];
-    public $editProduct = [];
+    public $searchTerm;
+    public $suppliers;
+    public $categories;
+    public $currencies;
+    public $requisitionDescription;
+    public $quotationDescription;
+    public $supplierId;
+    public $currencyId;
+    public $categoryId;
+    public $purchasePrice;
+    public $salePrice;
+    public $reorderPoint;
+    public $initialStock;
+   
+    
+    protected $listeners = [
+        'productListUpdated' => '$refresh',
+    ];
+    public function mount()
+    {
+    $this->suppliers = Supplier::all();
+    $this->categories = Category::all();
+    $this->currencies = Currency::all();
+    }
 
     public function render()
     {
-        $products = Product::with(['categoria', 'moneda', 'proveedor'])
-            ->when($this->supplierFilter, function ($query) {
-                $query->where('supplier_id', $this->supplierFilter);
-            })
-            ->when($this->categoryFilter, function ($query) {
-                $query->where('category_id', $this->categoryFilter);
-            })
-            ->when($this->search, function ($query) {
-                $query->where(function ($query) {
-                    $query->where('descripcion_pedido', 'LIKE', "%{$this->search}%")
-                        ->orWhere('descripcion_cotizacion', 'LIKE', "%{$this->search}%");
-                });
-            })
-            ->orderByDesc('id')
-            ->paginate(20);
+        $products = Product::with(['proveedor', 'categoria', 'moneda'])
+            ->search($this->searchTerm)
+            ->paginate(15);
 
-        $suppliers = Supplier::all();
-        $categories = Category::all();
-        $currencies = Currency::all();
-
-        return view('livewire.products-table', compact('products', 'suppliers', 'categories', 'currencies'));
+        return view('livewire.products-table', [
+            'products' => $products,
+        ]);
     }
 
-    public function editDescriptionPedido($productId)
+    public function createProduct()
     {
-        $this->editDescriptionPedido[$productId] = true;
+        $this->validate([
+            'requisitionDescription' => 'required',
+            'quotationDescription' => 'required',
+            'purchasePrice' => 'required',
+            'salePrice' => 'required',            
+        ]);
+        $newProduct = Product::create([
+            'descripcion_pedido' => $this->requisitionDescription,
+            'descripcion_cotizacion' => $this->quotationDescription,
+            'proveedor' => $this->supplierId,
+            'moneda' => $this->currencyId,
+            'categoria' => $this->categoryId,
+            'precio_compra' => $this->purchasePrice,
+            'precio_venta' =>  $this->salePrice,
+            'punto_pedido' => $this->reorderPoint,
+            'stock_inicial' => $this->initialStock,
+        ]);
+
+        $this->emit('productListUpdated');
     }
 
-    public function saveDescriptionPedido($productId)
+    public function editProduct(Product $product, $field, $value)
     {
-        $product = Product::find($productId);
-        $product->update(['descripcion_pedido' => $this->editDescriptionPedido[$productId]]);
-        unset($this->editDescriptionPedido[$productId]);
+        $product->{$field} = $value;
+        $product->save();
+
+        $this->emit('productListUpdated');
     }
 
-    public function editDescriptionCotizacion($productId)
+    public function confirmDelete(Product $product)
     {
-        $this->editDescriptionCotizacion[$productId] = true;
+        $this->dispatchBrowserEvent('showDeleteModal', [
+            'productId' => $product->id,
+        ]);
     }
 
-    public function saveDescriptionCotizacion($productId)
+    public function deleteProduct(Product $product)
     {
-        $product = Product::find($productId);
-        $product->update(['descripcion_cotizacion' => $this->editDescriptionCotizacion[$productId]]);
-        unset($this->editDescriptionCotizacion[$productId]);
-    }
+        $product->delete();
 
-    public function editSupplier($productId)
-    {
-        $this->editSupplier[$productId] = true;
-    }
-
-    public function saveSupplier($productId)
-    {
-        $product = Product::find($productId);
-        $product->update(['supplier_id' => $this->editSupplier[$productId]]);
-        unset($this->editSupplier[$productId]);
-    }
-
-    public function editCurrency($productId)
-    {
-        $this->editCurrency[$productId] = true;
-    }
-
-    public function saveCurrency($productId)
-    {
-        $product = Product::find($productId);
-        $product->update(['currency_id' => $this->editCurrency[$productId]]);
-        unset($this->editCurrency[$productId]);
-    }
-
-    public function editCategory($productId)
-    {
-        $this->editCategory[$productId] = true;
-    }
-
-    public function saveCategory($productId)
-    {
-        $product = Product::find($productId);
-        $product->update(['category_id' => $this->editCategory[$productId]]);
-        unset($this->editCategory[$productId]);
-    }
-    public function editPurchasePrice($productId)
-    {
-        $this->editPurchasePrice[$productId] = true;
-    }
-
-    public function savePurchasePrice($productId)
-    {
-        $product = Product::find($productId);
-        $product->update(['purchase_price' => $this->editPurchasePrice[$productId]]);
-        unset($this->editPurchasePrice[$productId]);
-    }
-
-    public function editSalePrice($productId)
-    {
-        $this->editSalePrice[$productId] = true;
-    }
-
-    public function saveSalePrice($productId)
-    {
-        $product = Product::find($productId);
-        $product->update(['sale_price' => $this->editSalePrice[$productId]]);
-        unset($this->editSalePrice[$productId]);
-    }
-
-    public function editReorderPoint($productId)
-    {
-        $this->editReorderPoint[$productId] = true;
-    }
-
-    public function saveReorderPoint($productId)
-    {
-        $product = Product::find($productId);
-        $product->update(['reorder_point' => $this->editReorderPoint[$productId]]);
-        unset($this->editReorderPoint[$productId]);
-    }
-
-    public function editInitialStock($productId)
-    {
-        $this->editInitialStock[$productId] = true;
-    }
-
-    public function saveInitialStock($productId)
-    {
-        $product = Product::find($productId);
-        $product->update(['initial_stock' => $this->editInitialStock[$productId]]);
-        unset($this->editInitialStock[$productId]);
-    }
-
-    public function delete($productId)
-    {
-        Product::find($productId)->delete();
+        $this->emit('productListUpdated');
     }
 }
-?>
