@@ -26,10 +26,17 @@ class ProductsTable extends Component
     public $salePrice;
     public $reorderPoint;
     public $initialStock;
+    public $searchProveedor = '';
+    public $searchCategoria = '';
    
-    
+    protected $queryString = [
+        'searchProveedor' => ['except' => ''],
+        'searchCategoria' => ['except' => ''],
+    ];
+
     protected $listeners = [
         'productListUpdated' => '$refresh',
+
     ];
     public function mount()
     {
@@ -42,6 +49,16 @@ class ProductsTable extends Component
     {
         $products = Product::with(['proveedor', 'categoria', 'moneda'])
             ->search($this->searchTerm)
+            ->when($this->searchProveedor, function ($query) {
+                $query->whereHas('proveedor', function ($query) {
+                    $query->where('razon_social', 'like', '%' . $this->searchProveedor . '%');
+                });
+            })
+            ->when($this->searchCategoria, function ($query) {
+                $query->whereHas('categoria', function ($query) {
+                    $query->where('descripcion', 'like', '%' . $this->searchCategoria . '%');
+                });
+            })
             ->paginate(15);
 
         return view('livewire.products-table', [

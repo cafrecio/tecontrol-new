@@ -1,11 +1,12 @@
 <div>
-    <div class="row mb-3">
+    
+    <div class="row mb-12">
         <div class="col-md-4">
-            <button class="btn btn-primary" wire:click="createProduct">Agregar Producto</button>
-        </div>
-        <div class="col-md-8">
             <input type="text" class="form-control" placeholder="Buscar..." wire:model="searchTerm">
         </div>
+    </div>
+    <div class="text-center" padding="10px">
+        <h3>Agregar productos</h3>
     </div>
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
@@ -87,14 +88,14 @@
                     <td contenteditable="true" wire:key="descripcion_pedido-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'descripcion_pedido', $event.target.textContent)">{{ $product->descripcion_pedido }}</td>
                     <td contenteditable="true" wire:key="descripcion_cotizacion-{{ $product->id }}" wire:blur
                             ="editProduct({{ $product->id }},'descripcion_cotizacion', $event.target.textContent)">{{ $product->descripcion_cotizacion }}</td>
-                    <td contenteditable="true" wire:key="proveedor_id-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'proveedor_id', $event.target.textContent)">
-                            <option value="{{ $supplier->id }}" @if($product->proveedor_id == $supplier->id) selected @endif>{{ $supplier->razon_social }}</option>
+                    <td contenteditable="true" wire:key="proveedor-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'proveedor', $event.target.textContent)">
+                            <option value="{{ $supplier->id }}" @if($product->proveedor == $supplier->id) selected @endif>{{ $supplier->razon_social }}</option>
                     </td>
-                    <td contenteditable="true" wire:key="categoria_id-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'categoria_id', $event.target.textContent)">
-                            <option value="{{ $category->id }}" @if($product->categoria_id == $category->id) selected @endif>{{ $category->descripcion }}</option>
+                    <td contenteditable="true" wire:key="categoria-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'categoria', $event.target.textContent)">
+                            <option value="{{ $category->id }}" @if($product->categoria == $category->id) selected @endif>{{ $category->descripcion }}</option>
                     </td>
-                    <td contenteditable="true" wire:key="moneda_id-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'moneda_id', $event.target.textContent)">
-                            <option value="{{ $currency->id }}" @if($product->moneda_id == $currency->id) selected @endif>{{ $currency->moneda }}</option>
+                    <td contenteditable="true" wire:key="moneda-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'moneda', $event.target.textContent)">
+                            <option value="{{ $currency->id }}" @if($product->moneda == $currency->id) selected @endif>{{ $currency->moneda }}</option>
                     </td>
                     <td contenteditable="true" wire:key="precio_compra-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'precio_compra', $event.target.textContent)">{{ $product->precio_compra }}</td>
                     <td contenteditable="true" wire:key="precio_venta-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'precio_venta', $event.target.textContent)">{{ $product->precio_venta }}</td>
