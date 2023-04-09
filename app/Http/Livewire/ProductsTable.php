@@ -12,6 +12,7 @@ use App\Models\Currency;
 class ProductsTable extends Component
 {
     use WithPagination;
+    protected $paginationTheme = 'bootstrap';
 
     public $searchTerm;
     public $suppliers;
@@ -30,8 +31,8 @@ class ProductsTable extends Component
     public $searchCategoria = '';
     public $field;
     public $value;
+    
 
-   
     protected $queryString = [
         'searchProveedor' => ['except' => ''],
         'searchCategoria' => ['except' => ''],
@@ -95,18 +96,12 @@ class ProductsTable extends Component
     }
 
     
-    public function editProduct(Product $product, $field, $value)
+    public function editProduct($id, $field, $value)
 
     {
-        // Validar el valor del campo
-        $this->validate([
-            'requisitionDescription' => 'required',
-            'quotationDescription' => 'required',
-            'salePrice' => 'required',
-        ]);
 
-         // Buscar el producto por su id
-        $product = Product::find($product);
+    // Buscar el producto por su id
+        $product = Product::find($id);
     
     // Actualizar el campo del producto
         $product->$field = $value;
@@ -115,24 +110,24 @@ class ProductsTable extends Component
         $this->emit('productListUpdated');
     }
 
-    public function updateSupplier(Product $product)
+    public function updateSupplier( Product $product, $value)
     {
-        $product->proveedor = $this->supplierId;
+        $product->proveedor = $value;
         $product->save();
 
         $this->emit('productListUpdated');
     }
 
-    public function updateCurrency(Product $product)
+    public function updateCurrency(Product $product, $value)
     {
-        $product->moneda = $this->currencyId;
+        $product->moneda = $value;
         $product->save();
 
         $this->emit('productListUpdated');
     }
-    public function updateCategory(Product $product)
+    public function updateCategory(Product $product, $value)
     {
-        $product->categoria = $this->categoryId;
+        $product->categoria = $value;
         $product->save();
 
         $this->emit('productListUpdated');

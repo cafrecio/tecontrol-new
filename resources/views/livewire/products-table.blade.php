@@ -92,32 +92,29 @@
                               contenteditable>{{ $product->descripcion_pedido }}</span>
                     </td>
                     
-                    <td 
-                        span wire:click="editProduct({{ $product->id }}, 'descripcion_cotizacion', $event.target.innerText)" 
+                    <td>
+                        <span wire:click="editProduct({{ $product->id }}, 'descripcion_cotizacion', $event.target.innerText)" 
                               wire:blur="editProduct({{ $product->id }}, 'descripcion_cotizacion', $event.target.innerText)"
                               contenteditable>{{ $product->descripcion_cotizacion }}</span>
                     </td>
                     <td>
-                        <select class="form-control" wire:model="supplierId" id="supplierId" wire:change="updateSupplier">
-                            <option value="{{ $supplier->id }}">{{ $supplier->razon_social }}</option>
+                        <select class="form-control" id="editSupplierId" wire:change="updateSupplier">
                             @foreach ($suppliers as $supplier)
-                                <option value="{{ $supplier->id }}" {{ $supplierId == $supplier->id ? 'selected' : '' }}>{{ $supplier->razon_social }}</option>
+                                <option value="{{ $supplier->id }}" {{$supplier->id == $product->proveedor ? 'selected':''}}>{{ $supplier->razon_social }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" wire:model="categoryId" id="categoryId" wire:change="updateCategory">
-                            <option value="{{ $category->id }}">{{ $category->descripcion }}</option>
+                        <select class="form-control" id="editCategoryId" wire:change="updateCategory">
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}">{{ $category->descripcion }}</option>
+                                <option value="{{ $category->id }}" {{$category->id == $product->categoria ? 'selected':''}}>{{ $category->descripcion }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" wire:model="currencyId" id="currencyId" wire:change="updateCurrency">
-                            <option value="{{ $currency->id }}">{{ $currency->moneda }}</option>
+                        <select class="form-control" id="editCurrencyId" wire:change="updateCurrency({{$product->id}},$event.target.value)">
                             @foreach ($currencies as $currency)
-                                <option value="{{ $currency->id }}">{{ $currency->moneda }}</option>
+                                <option value="{{ $currency->id }}" {{$currency->id == $product->moneda ? 'selected':''}}>{{ $currency->moneda }}</option>
                             @endforeach
                         </select>
                     </td>
