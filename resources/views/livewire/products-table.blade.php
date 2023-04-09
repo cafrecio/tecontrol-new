@@ -83,26 +83,66 @@
                 </tr>
             </thead>
             <tbody>
+                
                 @foreach ($products as $product)
                 <tr>
-                    <td contenteditable="true" wire:key="descripcion_pedido-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'descripcion_pedido', $event.target.textContent)">{{ $product->descripcion_pedido }}</td>
-                    <td contenteditable="true" wire:key="descripcion_cotizacion-{{ $product->id }}" wire:blur
-                            ="editProduct({{ $product->id }},'descripcion_cotizacion', $event.target.textContent)">{{ $product->descripcion_cotizacion }}</td>
-                    <td contenteditable="true" wire:key="proveedor-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'proveedor', $event.target.textContent)">
-                            <option value="{{ $supplier->id }}" @if($product->proveedor == $supplier->id) selected @endif>{{ $supplier->razon_social }}</option>
-                    </td>
-                    <td contenteditable="true" wire:key="categoria-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'categoria', $event.target.textContent)">
-                            <option value="{{ $category->id }}" @if($product->categoria == $category->id) selected @endif>{{ $category->descripcion }}</option>
-                    </td>
-                    <td contenteditable="true" wire:key="moneda-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'moneda', $event.target.textContent)">
-                            <option value="{{ $currency->id }}" @if($product->moneda == $currency->id) selected @endif>{{ $currency->moneda }}</option>
-                    </td>
-                    <td contenteditable="true" wire:key="precio_compra-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'precio_compra', $event.target.textContent)">{{ $product->precio_compra }}</td>
-                    <td contenteditable="true" wire:key="precio_venta-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'precio_venta', $event.target.textContent)">{{ $product->precio_venta }}</td>
-                    <td contenteditable="true" wire:key="punto_pedido-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'punto_pedido', $event.target.textContent)">{{ $product->punto_pedido }}</td>
-                    <td contenteditable="true" wire:key="stock_inicial-{{ $product->id }}" wire:blur="editProduct({{ $product->id }},'stock_inicial', $event.target.textContent)">{{ $product->stock_inicial }}</td>
                     <td>
-                        <button class="btn btn-danger" wire:click="deleteProduct({{ $product->id }})">Eliminar</button>
+                        <span wire:click="editProduct({{ $product->id }}, 'descripcion_pedido', $event.target.innerText)" 
+                              wire:blur="editProduct({{ $product->id }}, 'descripcion_pedido', $event.target.innerText)"
+                              contenteditable>{{ $product->descripcion_pedido }}</span>
+                    </td>
+                    
+                    <td 
+                        span wire:click="editProduct({{ $product->id }}, 'descripcion_cotizacion', $event.target.innerText)" 
+                              wire:blur="editProduct({{ $product->id }}, 'descripcion_cotizacion', $event.target.innerText)"
+                              contenteditable>{{ $product->descripcion_cotizacion }}</span>
+                    </td>
+                    <td>
+                        <select class="form-control" wire:model="supplierId" id="supplierId" wire:change="updateSupplier">
+                            <option value="{{ $supplier->id }}">{{ $supplier->razon_social }}</option>
+                            @foreach ($suppliers as $supplier)
+                                <option value="{{ $supplier->id }}" {{ $supplierId == $supplier->id ? 'selected' : '' }}>{{ $supplier->razon_social }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" wire:model="categoryId" id="categoryId" wire:change="updateCategory">
+                            <option value="{{ $category->id }}">{{ $category->descripcion }}</option>
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->descripcion }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <select class="form-control" wire:model="currencyId" id="currencyId" wire:change="updateCurrency">
+                            <option value="{{ $currency->id }}">{{ $currency->moneda }}</option>
+                            @foreach ($currencies as $currency)
+                                <option value="{{ $currency->id }}">{{ $currency->moneda }}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td 
+                        span wire:click="editProduct({{ $product->id }}, 'precio_compra', $event.target.innerText)" 
+                              wire:blur="editProduct({{ $product->id }}, 'precio_compra', $event.target.innerText)"
+                              contenteditable>{{ $product->precio_compra }}</span>
+                    </td>
+                    <td 
+                        span wire:click="editProduct({{ $product->id }}, 'precio_venta', $event.target.innerText)" 
+                              wire:blur="editProduct({{ $product->id }}, 'precio_venta', $event.target.innerText)"
+                              contenteditable>{{ $product->precio_venta }}</span>
+                    </td>
+                    <td 
+                        span wire:click="editProduct({{ $product->id }}, 'punto_pedido', $event.target.innerText)" 
+                              wire:blur="editProduct({{ $product->id }}, 'punto_pedido', $event.target.innerText)"
+                              contenteditable>{{ $product->punto_pedido }}</span>
+                    </td>
+                    <td 
+                        span wire:click="editProduct({{ $product->id }}, 'stock_inicial', $event.target.innerText)" 
+                              wire:blur="editProduct({{ $product->id }}, 'stock_inicial', $event.target.innerText)"
+                              contenteditable>{{ $product->stock_inicial }}</span>
+                    </td>
+                    <td>
+                        <button class="btn btn-danger btn-sm" wire:click="deleteProduct({{ $product->id }})"><i class="fa fa-times"></i></button>
                     </td>
                 </tr>
                     @endforeach

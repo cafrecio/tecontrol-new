@@ -28,6 +28,9 @@ class ProductsTable extends Component
     public $initialStock;
     public $searchProveedor = '';
     public $searchCategoria = '';
+    public $field;
+    public $value;
+
    
     protected $queryString = [
         'searchProveedor' => ['except' => ''],
@@ -49,16 +52,6 @@ class ProductsTable extends Component
     {
         $products = Product::with(['proveedor', 'categoria', 'moneda'])
             ->search($this->searchTerm)
-            ->when($this->searchProveedor, function ($query) {
-                $query->whereHas('proveedor', function ($query) {
-                    $query->where('razon_social', 'like', '%' . $this->searchProveedor . '%');
-                });
-            })
-            ->when($this->searchCategoria, function ($query) {
-                $query->whereHas('categoria', function ($query) {
-                    $query->where('descripcion', 'like', '%' . $this->searchCategoria . '%');
-                });
-            })
             ->paginate(15);
 
         return view('livewire.products-table', [
@@ -71,7 +64,6 @@ class ProductsTable extends Component
         $this->validate([
             'requisitionDescription' => 'required',
             'quotationDescription' => 'required',
-            'purchasePrice' => 'required',
             'salePrice' => 'required',            
         ]);
         
@@ -102,13 +94,50 @@ class ProductsTable extends Component
         $this->emit('productListUpdated');
     }
 
+    
     public function editProduct(Product $product, $field, $value)
+
     {
-        $product->{$field} = $value;
+        // Validar el valor del campo
+        $this->validate([
+            'requisitionDescription' => 'required',
+            'quotationDescription' => 'required',
+            'salePrice' => 'required',
+        ]);
+
+         // Buscar el producto por su id
+        $product = Product::find($product);
+    
+    // Actualizar el campo del producto
+        $product->$field = $value;
         $product->save();
 
         $this->emit('productListUpdated');
     }
+
+    public function updateSupplier(Product $product)
+    {
+        $product->proveedor = $this->supplierId;
+        $product->save();
+
+        $this->emit('productListUpdated');
+    }
+
+    public function updateCurrency(Product $product)
+    {
+        $product->moneda = $this->currencyId;
+        $product->save();
+
+        $this->emit('productListUpdated');
+    }
+    public function updateCategory(Product $product)
+    {
+        $product->categoria = $this->categoryId;
+        $product->save();
+
+        $this->emit('productListUpdated');
+    }
+
 
     public function confirmDelete(Product $product)
     {
