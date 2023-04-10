@@ -98,14 +98,14 @@
                               contenteditable>{{ $product->descripcion_cotizacion }}</span>
                     </td>
                     <td>
-                        <select class="form-control" id="editSupplierId" wire:change="updateSupplier">
+                        <select class="form-control" id="editSupplierId" wire:change="updateSupplier({{$product->id}},$event.target.value)"
                             @foreach ($suppliers as $supplier)
                                 <option value="{{ $supplier->id }}" {{$supplier->id == $product->proveedor ? 'selected':''}}>{{ $supplier->razon_social }}</option>
                             @endforeach
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" id="editCategoryId" wire:change="updateCategory">
+                        <select class="form-control" id="editCategoryId" wire:change="updateCategory({{$product->id}},$event.target.value)"
                             @foreach ($categories as $category)
                                 <option value="{{ $category->id }}" {{$category->id == $product->categoria ? 'selected':''}}>{{ $category->descripcion }}</option>
                             @endforeach
