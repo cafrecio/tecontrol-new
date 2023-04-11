@@ -57,7 +57,7 @@
                     <td><input type="number" class="form-control" wire:model="salePrice" id="salePrice"></td>
                     <td><input type="number" class="form-control" wire:model="reorderPoint" id="reorderPoint"></td>
                     <td><input type="number" class="form-control" wire:model="initialStock" id="initialStock"></td>
-                    <td>
+                    <td style="white-space: nowrap;">
                         <button wire:click="createProduct" class="btn btn-success btn-sm mr-1"><i class="fa fa-check"></i></button>
                         <button wire:click="editCategory(null)" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
                     </td>

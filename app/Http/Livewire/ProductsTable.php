@@ -54,6 +54,8 @@ class ProductsTable extends Component
         $products = Product::with(['proveedor', 'categoria', 'moneda'])
             ->search($this->searchTerm)
             ->paginate(15);
+        
+        $this->dispatchBrowserEvent('contentChanged');
 
         return view('livewire.products-table', [
             'products' => $products,
@@ -104,7 +106,10 @@ class ProductsTable extends Component
         $product = Product::find($id);
     
     // Actualizar el campo del producto
-        $product->$field = $value;
+        if ($value=="")
+            $product->$field = null;
+        else
+            $product->$field = $value;
         $product->save();
 
         $this->emit('productListUpdated');
