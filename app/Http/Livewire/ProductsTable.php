@@ -31,6 +31,7 @@ class ProductsTable extends Component
     public $searchCategoria = '';
     public $field;
     public $value;
+    public $editedProduct_id;
     
 
     protected $queryString = [
@@ -67,6 +68,7 @@ class ProductsTable extends Component
         $this->validate([
             'requisitionDescription' => 'required',
             'quotationDescription' => 'required',
+            'currencyId' => 'required',
             'salePrice' => 'required',            
         ]);
         
@@ -97,59 +99,56 @@ class ProductsTable extends Component
         $this->emit('productListUpdated');
     }
 
-    
-    public function editProduct($id, $field, $value)
-
+    public function editedProduct(Product $product)
     {
-
-    // Buscar el producto por su id
-        $product = Product::find($id);
-    
-    // Actualizar el campo del producto
-        if ($value=="")
-            $product->$field = null;
-        else
-            $product->$field = $value;
-        $product->save();
-
-        $this->emit('productListUpdated');
+        $this->editedProduct_id = $product->id;
+        $this->requisitionDescription = $product->descripcion_pedido;
+        $this->quotationDescription = $product->descripcion_cotizacion;
+        $this->supplierId = $product->proveedor;
+        $this->currencyId = $product->moneda;
+        $this->categoryId = $product->categoria;
+        $this->purchasePrice = $product->precio_compra;
+        $this->salePrice = $product->precio_venta;
+        $this->reorderPoint = $product->punto_pedido;
+        $this->initialStock = $product->stock_inicial;
+        
     }
 
-    public function updateSupplier( Product $product, $value)
+    public function updateProduct()
     {
-        $product->proveedor = $value;
-        $product->save();
-
-        $this->emit('productListUpdated');
-    }
-
-    public function updateCurrency(Product $product, $value)
-    {
-        $product->moneda = $value;
-        $product->save();
-
-        $this->emit('productListUpdated');
-    }
-    public function updateCategory(Product $product, $value)
-    {
-        $product->categoria = $value;
-        $product->save();
-
-        $this->emit('productListUpdated');
-    }
-
-
-    public function confirmDelete(Product $product)
-    {
-        $this->dispatchBrowserEvent('showDeleteModal', [
-            'productId' => $product->id,
+        $this->validate([
+            'requisitionDescription' => 'required',
+            'quotationDescription' => 'required',
+            'currencyId' => 'required',
+            'salePrice' => 'required',            
         ]);
+
+        $product = Product::find($this->editedProduct_id);
+        $product->descripcion_pedido = $this->requisitionDescription;
+        $product->descripcion_cotizacion = $this->quotationDescription;
+        $product->proveedor = $this->supplierId;
+        $product->moneda = $this->currencyId;
+        $product->categoria = $this->categoryId;
+        $product->precio_compra = $this->purchasePrice;
+        $product->precio_venta = $this->salePrice;
+        $product->punto_pedido = $this->reorderPoint;
+        $product->stock_inicial = $this->initialStock;
+        $product->save();
+
+        $this->cancelEdit();
+
+        session()->flash('message', 'Producto actualizado correctamente.');
     }
 
-    public function deleteProduct(Product $product)
+    public function cancelEdit()
     {
-        $product->delete();
-
-        $this->emit('productListUpdated');
+        $this->editedProduct_id = null;
     }
+
+    public function deleteProduct($productId)
+    {
+        Product::find($productId)->delete();
+        session()->flash('message', 'Producto eliminado correctamente.');
+    }
+    
 }
