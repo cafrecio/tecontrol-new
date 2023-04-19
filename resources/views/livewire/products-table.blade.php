@@ -27,8 +27,16 @@
             <tbody>
                 
                 <tr>
-                    <td><input type="text" class="form-control" wire:model="requisitionDescription" id="requisitionDescription" placeholder="Ingrese la descripción del pedido"></td>
-                    <td><input type="text" class="form-control" wire:model="quotationDescription" id="quotationDescription" placeholder="Ingrese la descripción de la cotización"></td>
+                    <td><input type="text" class="form-control" wire:model="requisitionDescription" id="requisitionDescription" placeholder="Ingrese la descripción del pedido">
+                        @error('Descripción Pedido')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </td>
+                    <td><input type="text" class="form-control" wire:model="quotationDescription" id="quotationDescription" placeholder="Ingrese la descripción de la cotización">
+                        @error('Descripción Cotización')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </td>
                     <td>
                         <select class="form-control" wire:model="supplierId" id="supplierId">
                             <option value="">Seleccione...</option>
@@ -52,9 +60,16 @@
                                 <option value={{ $currency->id }}>{{ $currency->moneda }}</option>
                             @endforeach
                         </select>
+                        @error('currencyId')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
                     </td>
                     <td><input type="number" class="form-control" wire:model="purchasePrice" id="purchasePrice"></td>
-                    <td><input type="number" class="form-control" wire:model="salePrice" id="salePrice"></td>
+                    <td><input type="number" class="form-control" wire:model="salePrice" id="salePrice">
+                        @error('Precio Venta')
+                            <span class="text-danger">{{ $message }}</span>
+                        @enderror
+                    </td>
                     <td><input type="number" class="form-control" wire:model="reorderPoint" id="reorderPoint"></td>
                     <td><input type="number" class="form-control" wire:model="initialStock" id="initialStock"></td>
                     <td style="white-space: nowrap;">
@@ -71,7 +86,7 @@
             <thead>
                 <tr>
                     <th>Descripción Pedido</th>
-                    <th>Descripción Cotización</th>
+                    <th>Descripción Cotización*</th>
                     <th>Proveedor</th>
                     <th>Categoría</th>
                     <th>Moneda</th>
@@ -83,73 +98,155 @@
                 </tr>
             </thead>
             <tbody>
-                
                 @foreach ($products as $product)
-                <tr>
-                    <td>
-                        <span wire:click="editProduct({{ $product->id }}, 'descripcion_pedido', $event.target.innerText)" 
-                              wire:blur="editProduct({{ $product->id }}, 'descripcion_pedido', $event.target.innerText)"
-                              contenteditable>{{ $product->descripcion_pedido }}</span>
-                    </td>
-                    
-                    <td>
-                        <span wire:click="editProduct({{ $product->id }}, 'descripcion_cotizacion', $event.target.innerText)" 
-                              wire:blur="editProduct({{ $product->id }}, 'descripcion_cotizacion', $event.target.innerText)"
-                              contenteditable>{{ $product->descripcion_cotizacion }}</span>
-                    </td>
-                    <td>
-                        <select class="form-control" id="editSupplierId" wire:change="updateSupplier({{$product->id}},$event.target.value)"
-                            @foreach ($suppliers as $supplier)
-                                <option value="{{ $supplier->id }}" {{$supplier->id == $product->proveedor ? 'selected':''}}>{{ $supplier->razon_social }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" id="editCategoryId" wire:change="updateCategory({{$product->id}},$event.target.value)"
-                            @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{$category->id == $product->categoria ? 'selected':''}}>{{ $category->descripcion }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td>
-                        <select class="form-control" id="editCurrencyId" wire:change="updateCurrency({{$product->id}},$event.target.value)">
-                            @foreach ($currencies as $currency)
-                                <option value="{{ $currency->id }}" {{$currency->id == $product->moneda ? 'selected':''}}>{{ $currency->moneda }}</option>
-                            @endforeach
-                        </select>
-                    </td>
-                    <td 
-                        span wire:click="editProduct({{ $product->id }}, 'precio_compra', $event.target.innerText)" 
-                              wire:blur="editProduct({{ $product->id }}, 'precio_compra', $event.target.innerText)"
-                              contenteditable>{{ $product->precio_compra }}</span>
-                    </td>
-                    <td 
-                        span wire:click="editProduct({{ $product->id }}, 'precio_venta', $event.target.innerText)" 
-                              wire:blur="editProduct({{ $product->id }}, 'precio_venta', $event.target.innerText)"
-                              contenteditable>{{ $product->precio_venta }}</span>
-                    </td>
-                    <td 
-                        span wire:click="editProduct({{ $product->id }}, 'punto_pedido', $event.target.innerText)" 
-                              wire:blur="editProduct({{ $product->id }}, 'punto_pedido', $event.target.innerText)"
-                              contenteditable>{{ $product->punto_pedido }}</span>
-                    </td>
-                    <td 
-                        span wire:click="editProduct({{ $product->id }}, 'stock_inicial', $event.target.innerText)" 
-                              wire:blur="editProduct({{ $product->id }}, 'stock_inicial', $event.target.innerText)"
-                              contenteditable>{{ $product->stock_inicial }}</span>
-                    </td>
-                    <td>
-                        <button class="btn btn-danger btn-sm" wire:click="deleteProduct({{ $product->id }})"><i class="fa fa-times"></i></button>
-                    </td>
-                </tr>
-                    @endforeach
+                    <tr>
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                    </div>
+                                    <input type="text" class="form-control" wire:model="requisitionDescription">
+                                </div>
+                                @error('requisitionDescription')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            @else
+                                {{ $product->descripcion_pedido }}
+                            @endif
+                        </td>
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                    </div>
+                                    <input type="text" class="form-control" wire:model="quotationDescription">
+                                </div>
+                                @error('quotationDescription')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            @else
+                                {{ $product->descripcion_cotizacion }}
+                            @endif
+                        </td>
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <select class="form-control" wire:model="supplierId">
+                                    @foreach ($suppliers as $supplier)
+                                        <option value="{{ $supplier->id }}"{{ $product->proveedor == 
+                                            $supplier->id ? 'selected' : '' }}>{{ $supplier->razon_social }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            @else
+                                @foreach($suppliers as $supplier)
+                                    @if($supplier->id == $product->proveedor)
+                                        {{ $supplier->razon_social }}
+                                    @endif
+                                @endforeach
+                            @endif
+                        </td>
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <select class="form-control" wire:model="categoryId">
+                                    @foreach ($categories as $category)
+                                        <option value="{{ $category->id }}"{{ $product->categoria == 
+                                            $category->id ? 'selected' : '' }}>{{ $category->descripcion }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                            @else
+                                @foreach($categories as $category)
+                                    @if($category->id == $product->categoria)
+                                        {{ $category->descripcion }}
+                                    @endif
+                                @endforeach
+                            @endif
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <select class="form-control" wire:model="currencyId">
+                                    @foreach ($currencies as $currency)
+                                        <option value="{{ $currency->id }}"{{ $product->moneda == 
+                                            $currency->id ? 'selected' : '' }}>{{ $currency->moneda }}
+                                        </option>
+                                    @endforeach
+                                </select>
+                                @error('currencyId')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            @else
+                                @foreach($currencies as $currency)
+                                    @if($currency->id == $product->moneda)
+                                        {{ $currency->moneda }}
+                                    @endif
+                                @endforeach
+                            @endif
+                        </td>
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">$</div>
+                                    </div>
+                                    <input type="text" class="form-control" wire:model="purchasePrice">
+                                </div>
+                            @else
+                                {{ $product->precio_compra }}
+                            @endif
+                        </td>
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                        <div class="input-group-text">$</div>
+                                    </div>
+                                    <input type="text" class="form-control" wire:model="salePrice">
+                                </div>
+                                @error('salePrice')
+                                    <span class="text-danger">{{ $message }}</span>
+                                @enderror
+                            @else
+                                {{ $product->precio_venta }}
+                            @endif
+                        </td>
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                    </div>
+                                    <input type="text" class="form-control" wire:model="reorderPoint">
+                                </div>
+                            @else
+                                {{ $product->punto_pedido }}
+                            @endif
+                        </td>
+                        <td>
+                            @if($editedProduct_id == $product->id)
+                                <div class="input-group mb-2">
+                                    <div class="input-group-prepend">
+                                    </div>
+                                    <input type="text" class="form-control" wire:model="initialStock">
+                                </div>
+                            @else
+                                {{ $product->stock_inicial }}
+                            @endif
+                        </td>
+                        <td>
+                            <div class="d-flex">
+                                @if ($editedProduct_id == $product->id)
+                                    <button wire:click="updateProduct()" class="btn btn-success btn-sm mr-1"><i class="fa fa-check"></i></button>
+                                    <button wire:click="cancelEdit()" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
+                                @else
+                                    <button wire:click="editedProduct({{ $product->id }})" class="btn btn-primary btn-sm mr-1"><i class="fa fa-edit"></i></button>
+                                    <button wire:click="deleteProduct({{ $product->id }})" onclick="return confirm('¿Está seguro de que desea eliminar este producto?')" 
+                                        class="btn btn-danger btn-sm"><i class="fa fa-times"></i>
+                                    </button>
+                                @endif
+                            </div>
+                        </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
-    </div>       
-    <div class="row mt-3">
-        <div class="col-md-12">
-            {{ $products->links() }}
-        </div>
-    </div>
+    </div>    
 </div>    
 
