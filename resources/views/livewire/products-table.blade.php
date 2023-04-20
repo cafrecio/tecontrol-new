@@ -27,18 +27,18 @@
             <tbody>
                 
                 <tr>
-                    <td><input type="text" class="form-control" wire:model="requisitionDescription" id="requisitionDescription" placeholder="Ingrese la descripción del pedido">
+                    <td><input type="text" class="form-control" wire:model="nRequisitionDescription" id="requisitionDescription" placeholder="Ingrese la descripción del pedido">
                         @error('Descripción Pedido')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </td>
-                    <td><input type="text" class="form-control" wire:model="quotationDescription" id="quotationDescription" placeholder="Ingrese la descripción de la cotización">
+                    <td><input type="text" class="form-control" wire:model="nQuotationDescription" id="quotationDescription" placeholder="Ingrese la descripción de la cotización">
                         @error('Descripción Cotización')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </td>
                     <td>
-                        <select class="form-control" wire:model="supplierId" id="supplierId">
+                        <select class="form-control" wire:model="nSupplierId" id="supplierId">
                             <option value="">Seleccione...</option>
                             @foreach ($suppliers as $supplier)
                                 <option value={{ $supplier->id }}>{{ $supplier->razon_social }}</option>
@@ -46,7 +46,7 @@
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" wire:model="categoryId" id="categoryId">
+                        <select class="form-control" wire:model="nCategoryId" id="categoryId">
                             <option value="">Seleccione...</option>
                             @foreach ($categories as $category)
                                 <option value={{ $category->id }}>{{ $category->descripcion }}</option>
@@ -54,7 +54,7 @@
                         </select>
                     </td>
                     <td>
-                        <select class="form-control" wire:model="currencyId" id="currencyId">
+                        <select class="form-control" wire:model="nCurrencyId" id="currencyId">
                             <option value="">Seleccione...</option>
                             @foreach ($currencies as $currency)
                                 <option value={{ $currency->id }}>{{ $currency->moneda }}</option>
@@ -64,14 +64,14 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </td>
-                    <td><input type="number" class="form-control" wire:model="purchasePrice" id="purchasePrice"></td>
-                    <td><input type="number" class="form-control" wire:model="salePrice" id="salePrice">
+                    <td><input type="number" class="form-control" wire:model="nPurchasePrice" id="purchasePrice"></td>
+                    <td><input type="number" class="form-control" wire:model="nSalePrice" id="salePrice">
                         @error('Precio Venta')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </td>
-                    <td><input type="number" class="form-control" wire:model="reorderPoint" id="reorderPoint"></td>
-                    <td><input type="number" class="form-control" wire:model="initialStock" id="initialStock"></td>
+                    <td><input type="number" class="form-control" wire:model="nReorderPoint" id="reorderPoint"></td>
+                    <td><input type="number" class="form-control" wire:model="nInitialStock" id="initialStock"></td>
                     <td style="white-space: nowrap;">
                         <button wire:click="createProduct" class="btn btn-success btn-sm mr-1"><i class="fa fa-check"></i></button>
                         <button wire:click="editCategory(null)" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
