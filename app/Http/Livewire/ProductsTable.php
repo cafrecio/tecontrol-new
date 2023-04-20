@@ -32,6 +32,15 @@ class ProductsTable extends Component
     public $field;
     public $value;
     public $editedProduct_id;
+    public $nRequisitionDescription;
+    public $nQuotationDescription;
+    public $nSupplierId;
+    public $nCurrencyId;
+    public $nCategoryId;
+    public $nPurchasePrice;
+    public $nSalePrice;
+    public $nReorderPoint;
+    public $nInitialStock;
     
 
     protected $queryString = [
@@ -73,26 +82,26 @@ class ProductsTable extends Component
         ]);
         
         $newProduct = Product::create([
-            'descripcion_pedido' => $this->requisitionDescription,
-            'descripcion_cotizacion' => $this->quotationDescription,
-            'proveedor' => $this->supplierId,
-            'moneda' => $this->currencyId,
-            'categoria' => $this->categoryId,
-            'precio_compra' => $this->purchasePrice,
-            'precio_venta' =>  $this->salePrice,
-            'punto_pedido' => $this->reorderPoint,
-            'stock_inicial' => $this->initialStock,
+            'descripcion_pedido' => $this->nRequisitionDescription,
+            'descripcion_cotizacion' => $this->nQuotationDescription,
+            'proveedor' => $this->nSupplierId,
+            'moneda' => $this->nCurrencyId,
+            'categoria' => $this->nCategoryId,
+            'precio_compra' => $this->nPurchasePrice,
+            'precio_venta' =>  $this->nSalePrice,
+            'punto_pedido' => $this->nReorderPoint,
+            'stock_inicial' => $this->nInitialStock,
         ]);
 
-        $this->requisitionDescription = '';
-        $this->quotationDescription = '';
-        $this->supplierId = '';
-        $this->currencyId = '';
-        $this->categoryId = '';
-        $this->purchasePrice = '';
-        $this->salePrice = '';
-        $this->reorderPoint = '';
-        $this->initialStock = '';
+        $this->nRequisitionDescription = '';
+        $this->nQuotationDescription = '';
+        $this->nSupplierId = '';
+        $this->nCurrencyId = '';
+        $this->nCategoryId = '';
+        $this->nPurchasePrice = '';
+        $this->nSalePrice = '';
+        $this->nReorderPoint = '';
+        $this->nInitialStock = '';
         
         session()->flash('message', 'Producto agregado correctamente.');
 
