@@ -75,10 +75,10 @@ class ProductsTable extends Component
     public function createProduct()
     {
         $this->validate([
-            'requisitionDescription' => 'required',
-            'quotationDescription' => 'required',
-            'currencyId' => 'required',
-            'salePrice' => 'required',            
+            'nRequisitionDescription' => 'required',
+            'nQuotationDescription' => 'required',
+            'nCurrencyId' => 'required',
+            'nSalePrice' => 'required',            
         ]);
         
         $newProduct = Product::create([
@@ -147,6 +147,21 @@ class ProductsTable extends Component
         $this->cancelEdit();
 
         session()->flash('message', 'Producto actualizado correctamente.');
+    }
+
+    public function cancelNew()
+    {
+        $this->nRequisitionDescription = '';
+        $this->nQuotationDescription = '';
+        $this->nSupplierId = '';
+        $this->nCurrencyId = '';
+        $this->nCategoryId = '';
+        $this->nPurchasePrice = '';
+        $this->nSalePrice = '';
+        $this->nReorderPoint = '';
+        $this->nInitialStock = '';
+
+        $this->emit('productListUpdated');
     }
 
     public function cancelEdit()

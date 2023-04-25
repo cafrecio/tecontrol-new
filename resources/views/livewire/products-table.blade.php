@@ -11,23 +11,24 @@
     <div class="table-responsive">
         <table class="table table-bordered table-striped table-hover">
             <thead>
-                <tr>
-                    <th>Descripción Pedido</th>
-                    <th>Descripción Cotización</th>
-                    <th>Proveedor</th>
-                    <th>Categoría</th>
-                    <th>Moneda</th>
-                    <th>Precio Compra</th>
-                    <th>Precio Venta</th>
-                    <th>Punto Pedido</th>
-                    <th>Stock Inicial</th>
-                    <th>Acciones</th>
+                <tr class="text-center">
+                    <th style="width: 20%;">Descripción Pedido</th>
+                    <th style="width: 20%;">Descripción Cotización</th> 
+                    <th style="width: 10%;">Proveedor</th>
+                    <th style="width: 10%;">Categoría</th>
+                    <th style="width: 5%;">Moneda</th>
+                    <th style="width: 10%;">Precio Compra</th>
+                    <th style="width: 10%;">Precio Venta</th>
+                    <th style="width: 5%;">Punto Pedido</th>
+                    <th style="width: 5%;">Stock Inicial</th>
+                    <th style="width: 5%;">Acciones</th>
                 </tr>
             </thead>
             <tbody>
                 
-                <tr>
-                    <td><input type="text" class="form-control" wire:model="nRequisitionDescription" id="requisitionDescription" placeholder="Ingrese la descripción del pedido">
+                <tr style="vertical-align: middle;">
+                    <td><textarea rows="5" class="form-control" wire:model="nRequisitionDescription" id="requisitionDescription"
+                         placeholder="Ingrese la descripción del pedido"></textarea>
                         @error('Descripción Pedido')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -64,8 +65,21 @@
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
                     </td>
-                    <td><input type="number" class="form-control" wire:model="nPurchasePrice" id="purchasePrice"></td>
-                    <td><input type="number" class="form-control" wire:model="nSalePrice" id="salePrice">
+                    <td>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                        <input type="number" class="form-control" wire:model="nPurchasePrice" id="purchasePrice">
+                        </div>
+                    </td>
+                    <td>
+                        <div class="input-group mb-2">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">$</div>
+                            </div>
+                        <input type="number" class="form-control" wire:model="nSalePrice" id="salePrice">
+                        </div>
                         @error('Precio Venta')
                             <span class="text-danger">{{ $message }}</span>
                         @enderror
@@ -74,19 +88,15 @@
                     <td><input type="number" class="form-control" wire:model="nInitialStock" id="initialStock"></td>
                     <td style="white-space: nowrap;">
                         <button wire:click="createProduct" class="btn btn-success btn-sm mr-1"><i class="fa fa-check"></i></button>
-                        <button wire:click="editCategory(null)" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
+                        <button wire:click="cancelNew" class="btn btn-danger btn-sm"><i class="fa fa-times"></i></button>
                     </td>
                 </tr>
             </tbody>
-        </table>
-    </div>
-
-    <div class="table-responsive">
-        <table class="table table-bordered table-striped table-hover">
+                <tr style="height: 30px;"></tr>
             <thead>
-                <tr>
+                <tr class="text-center">
                     <th>Descripción Pedido</th>
-                    <th>Descripción Cotización*</th>
+                    <th>Descripción Cotización</th>
                     <th>Proveedor</th>
                     <th>Categoría</th>
                     <th>Moneda</th>
@@ -102,11 +112,7 @@
                     <tr>
                         <td>
                             @if($editedProduct_id == $product->id)
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    </div>
                                     <input type="text" class="form-control" wire:model="requisitionDescription">
-                                </div>
                                 @error('requisitionDescription')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -116,11 +122,7 @@
                         </td>
                         <td>
                             @if($editedProduct_id == $product->id)
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    </div>
                                     <input type="text" class="form-control" wire:model="quotationDescription">
-                                </div>
                                 @error('quotationDescription')
                                     <span class="text-danger">{{ $message }}</span>
                                 @enderror
@@ -208,24 +210,16 @@
                                 {{ $product->precio_venta }}
                             @endif
                         </td>
-                        <td>
+                        <td style="align-content: center;">
                             @if($editedProduct_id == $product->id)
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    </div>
                                     <input type="text" class="form-control" wire:model="reorderPoint">
-                                </div>
                             @else
                                 {{ $product->punto_pedido }}
                             @endif
                         </td>
-                        <td>
+                        <td style="align-content: center;">
                             @if($editedProduct_id == $product->id)
-                                <div class="input-group mb-2">
-                                    <div class="input-group-prepend">
-                                    </div>
                                     <input type="text" class="form-control" wire:model="initialStock">
-                                </div>
                             @else
                                 {{ $product->stock_inicial }}
                             @endif
@@ -247,6 +241,9 @@
                 @endforeach
             </tbody>
         </table>
-    </div>    
+    </div>
+    <div class="card-footer">
+        {{ $products->links() }}
+    </div>
 </div>    
 
