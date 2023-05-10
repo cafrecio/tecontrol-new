@@ -342,13 +342,13 @@ return [
         ],
         [
             'text'        => 'Clientes',
-            'url'       => 'admin.clientes.index',
+            'route'       => 'admin.clients.index',
             'icon'        => 'fas fa-fw fa-users',
             
         ],
         [
             'text'        => 'Proveedores',
-            'url'       => 'admin.proveedores.index',
+            'url'       => 'admin.suppliers.index',
             'icon'        => 'fas fa-fw fa-truck',
             
         ],
