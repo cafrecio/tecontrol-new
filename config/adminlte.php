@@ -348,7 +348,7 @@ return [
         ],
         [
             'text'        => 'Proveedores',
-            'url'       => 'admin.suppliers.index',
+            'route'       => 'admin.suppliers.index',
             'icon'        => 'fas fa-fw fa-truck',
             
         ],

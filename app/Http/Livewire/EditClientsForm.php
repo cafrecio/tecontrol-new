@@ -60,21 +60,6 @@ class EditClientsForm extends Component
     {
         $this->validate();
         $this->client->save();
-        /*
-        if ($this->selectedClientId) {
-            // Editar cliente existente
-            $this->client->save();
-        } else {
-            // Crear nuevo cliente
-            $Creador=Client::create($this->client->toArray());
-            dd($Creador);
-        }*/
-
-        // Restablecer los valores del cliente y el ID seleccionado
-        /*$this->client = new Client();
-        $this->selectedClientId = null;*/
-
-        // Emitir evento para actualizar la lista de clientes
         $this->emit('refreshClients');
     }
 }

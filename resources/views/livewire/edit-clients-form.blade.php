@@ -11,7 +11,6 @@
                 <div class="row">
                     <div class="col">
                         <div class="form-group">
-                            {{ var_dump($selectedClientId) }}
                             <label for="razon-social">Razón Social</label>
                             <input type="text" wire:model="client.razon_social" class="form-control" id="razon-social">
                         </div>
