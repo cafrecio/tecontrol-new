@@ -43,7 +43,7 @@ class ClientsTable extends Component
         }
 
         if ($this->clientStatus) {
-            $query->where('tipo_cliente', 'like', '%' . $this->clientStatus . '%');
+            $query->where('tipo_cliente', '=', $this->clientStatus);
         }
 
         $this->clients = $query->orderBy('razon_social')->get();

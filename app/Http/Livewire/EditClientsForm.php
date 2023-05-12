@@ -11,13 +11,14 @@ class EditClientsForm extends Component
     public $selectedClientId;
 
     protected $listeners = [
-        'loadClient' => 'loadClient'
+        'loadClient' => 'loadClient',
+        'loadClientConf' => 'loadClientConf'
     ];
 
     protected $rules = [
         'client.razon_social' => 'required',
         'client.tipo_cliente' => 'required',
-        'client.CUIT' => 'nullable|numeric|digits:11',
+        'client.cuit' => 'nullable',
         'client.direccion' => 'nullable|max:255',
         'client.telefono' => 'nullable|max:255',
         'client.condicion' => 'nullable|max:255',
@@ -32,9 +33,22 @@ class EditClientsForm extends Component
 
     public function loadClient($client_id)
     {
-        $client = Client::find($client_id);
-        $this->selectedClientId = $client_id;
-        $this->client = $client;
+        if ($this->selectedClientId && $this->client->isDirty())
+            $this->emit('clientDirty', $client_id);
+        else
+            $this->loadClientConf($client_id);
+    }
+
+
+    public function loadClientConf($client_id)
+    {
+        if ($client_id) {
+            $this->client = Client::find($client_id);
+            $this->selectedClientId = $client_id;
+        } else {
+            $this->client = new Client();
+            $this->selectedClientId = null;
+        }
     }
 
     public function render()
@@ -45,20 +59,20 @@ class EditClientsForm extends Component
     public function saveClient()
     {
         $this->validate();
-
+        $this->client->save();
+        /*
         if ($this->selectedClientId) {
             // Editar cliente existente
-            $client = Client::find($this->selectedClientId);
-            $client->update($this->client->toArray());
+            $this->client->save();
         } else {
             // Crear nuevo cliente
             $Creador=Client::create($this->client->toArray());
             dd($Creador);
-        }
+        }*/
 
         // Restablecer los valores del cliente y el ID seleccionado
-        $this->client = new Client();
-        $this->selectedClientId = null;
+        /*$this->client = new Client();
+        $this->selectedClientId = null;*/
 
         // Emitir evento para actualizar la lista de clientes
         $this->emit('refreshClients');
