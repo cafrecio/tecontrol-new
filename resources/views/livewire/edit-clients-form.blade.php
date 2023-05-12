@@ -8,8 +8,8 @@
             <label for="tipo-cliente">Tipo de Cliente</label>
             <select wire:model="client.tipo_cliente" class="form-control" id="tipo-cliente">
                 <option value="">Seleccione un estado</option>
-                <option value="PENDIENTE">PENDIENTE</option>
-                <option value="CONFIRMADO">CONFIRMADO</option>
+                <option value="1">PENDIENTE</option>
+                <option value="2">CONFIRMADO</option>
             </select>
         </div>
         <div class="form-group">

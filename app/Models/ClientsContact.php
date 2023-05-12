@@ -12,7 +12,7 @@ class ClientsContact extends Model
 
     protected $table = 'clientscontacts';
     protected $fillable = [
-        'idCliente',
+        'clients_id',
         'apellido_nombre',
         'telefono',
         'mail',
@@ -22,6 +22,6 @@ class ClientsContact extends Model
 
     public function client()
     {
-        return $this->belongsTo(Client::class, 'idCliente');
+        return $this->belongsTo(Client::class, 'clients_id');
     }
 }

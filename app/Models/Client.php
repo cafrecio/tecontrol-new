@@ -20,11 +20,12 @@ class Client extends Model
         'telefono',
         'condicion',
         'observaciones',
+        'active'
     ];
 
     public function client()
     {
-        return $this->hasOne(ClientsContact::class, 'idCliente');
+        return $this->hasMany(ClientsContact::class, 'clients_id');
     }
 
     public function scopeSearch(Builder $query, Request $request): Builder

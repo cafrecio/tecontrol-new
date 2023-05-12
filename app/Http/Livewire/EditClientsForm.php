@@ -28,12 +28,12 @@ class EditClientsForm extends Component
     {
         $this->client = new Client();
         $this->selectedClientId = null;
-        
     }
 
-    public function loadClient(Client $client)
+    public function loadClient($client_id)
     {
-        $this->selectedClientId = $client->id;
+        $client = Client::find($client_id);
+        $this->selectedClientId = $client_id;
         $this->client = $client;
     }
 
@@ -43,24 +43,24 @@ class EditClientsForm extends Component
     }
 
     public function saveClient()
-{
-    $this->validate();
+    {
+        $this->validate();
 
-    if ($this->selectedClientId) {
-        // Editar cliente existente
-        $client = Client::find($this->selectedClientId);
-        $client->update($this->client->toArray());
-    } else {
-        // Crear nuevo cliente
-        Client::create($this->client->toArray());
+        if ($this->selectedClientId) {
+            // Editar cliente existente
+            $client = Client::find($this->selectedClientId);
+            $client->update($this->client->toArray());
+        } else {
+            // Crear nuevo cliente
+            $Creador=Client::create($this->client->toArray());
+            dd($Creador);
+        }
+
+        // Restablecer los valores del cliente y el ID seleccionado
+        $this->client = new Client();
+        $this->selectedClientId = null;
+
+        // Emitir evento para actualizar la lista de clientes
+        $this->emit('refreshClients');
     }
-
-    // Restablecer los valores del cliente y el ID seleccionado
-    $this->client = new Client();
-    $this->selectedClientId = null;
-
-    // Emitir evento para actualizar la lista de clientes
-    $this->emit('refreshClients');
-}
-
 }

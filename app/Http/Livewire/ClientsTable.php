@@ -14,7 +14,7 @@ class ClientsTable extends Component
     public $clientContact;
     public $searchClient;
     public $clientStatus;
-   
+
     protected $listeners = [
         'refreshClients' => '$refresh',
     ];
@@ -30,29 +30,39 @@ class ClientsTable extends Component
 
     public function render()
     {
+        $this->clients = Client::all();
+
+        if ($this->client && $this->client->clientContact && $this->client->clientContact->id) {
+            $this->clientContact = ClientsContact::find($this->client->clientContact->id);
+        }
+
         $query = Client::query();
-    
+
         if ($this->searchClient) {
             $query->where('razon_social', 'like', '%' . $this->searchClient . '%');
         }
-    
+
         if ($this->clientStatus) {
             $query->where('tipo_cliente', 'like', '%' . $this->clientStatus . '%');
         }
-    
-        $this->clients = $query->get();
-    
+
+        $this->clients = $query->orderBy('razon_social')->get();
+
         return view('livewire.clients-table');
     }
-    
+
 
     public function selectClient(Client $client)
     {
-        $this->emit('loadClient', $client);
+        $this->emit('loadClient', $client->id);
     }
 
     public function updatedClientStatus()
     {
         $this->render();
+    }
+    public function delete(Client $client)
+    {
+        $client->delete();
     }
 }
