@@ -33,8 +33,9 @@ class EditClientsForm extends Component
 
     public function loadClient($client_id)
     {
-        if ($this->selectedClientId && $this->client->isDirty())
-            $this->emit('clientDirty', $client_id);
+        
+        if ($this->selectedClientId && $this->client->isDirty()){
+            $this->emit('clientDirty', $client_id);}
         else
             $this->loadClientConf($client_id);
     }

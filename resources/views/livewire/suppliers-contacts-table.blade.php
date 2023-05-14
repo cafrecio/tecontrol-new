@@ -64,9 +64,19 @@
                     </tr>
                 @endforeach
                 <tr>
-                    <td><input type="text" wire:model.defer="nApellidoNombre" placeholder="Ingrese Apellido y nombre" class="form-control"/></td>
+                    <td>
+                        <input type="text" wire:model.defer="nApellidoNombre" placeholder="Ingrese Apellido y nombre" class="form-control"/>
+                        @error('nApellidoNombre') 
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                    </td>
                     <td><input type="text" wire:model.defer="nTelefono" placeholder="Ingrese Teléfono" class="form-control"/></td>
-                    <td><input type="text" wire:model.defer="nMail" placeholder="Ingrese Mail" class="form-control"/></td>
+                    <td>
+                        <input type="text" wire:model.defer="nMail" placeholder="Ingrese Mail" class="form-control"/>
+                        @error('nMail') 
+                            <span class="error">{{ $message }}</span>
+                        @enderror
+                    </td>
                     <td><input type="text" wire:model.defer="nPuesto" placeholder="Ingrese Puesto" class="form-control"/></td>
                     <td>
                     <button wire:click="addContact" class="btn btn-success btn-sm mr-1"><i class="fa fa-check"></i></button>

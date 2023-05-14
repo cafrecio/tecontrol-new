@@ -53,8 +53,8 @@ class ClientsContactsTable extends Component
     {
         $this->validate([
             'apellido_nombre' => 'required',
-            'telefono' => 'required',
-            'mail' => 'required|email',
+            'telefono' => 'nullable',
+            'mail' => 'nullable|email',
             'puesto' => 'nullable',
             'observaciones' => 'nullable',
         ]);
@@ -92,8 +92,8 @@ class ClientsContactsTable extends Component
     {
         $this->validate([
             'nApellidoNombre' => 'required',
-            'nTelefono' => 'required',
-            'nMail' => 'required|email',
+            'nTelefono' => 'nullable',
+            'nMail' => 'nullable|email',
             'nPuesto' => 'nullable',
             'nObservaciones' => 'nullable',
         ]);

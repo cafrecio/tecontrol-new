@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             <div class="form-group">
-                <input type="text" wire:model.defer="searchClient" class="form-control" placeholder="Buscar cliente">
+                <input type="text" wire:model="searchClient" class="form-control" placeholder="Buscar cliente">
             </div>
 
             <div class="form-group">

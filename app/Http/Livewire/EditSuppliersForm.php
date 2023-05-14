@@ -17,7 +17,7 @@ class EditSuppliersForm extends Component
 
     protected $rules = [
         'supplier.razon_social' => 'required',
-        'supplier.nac_imp' => 'nullable',
+        'supplier.nac_imp_id' => 'nullable',
         'supplier.rubro' => 'nullable',
         'supplier.direccion' => 'nullable|max:255',
         'supplier.telefono' => 'nullable|max:255',
@@ -33,8 +33,8 @@ class EditSuppliersForm extends Component
 
     public function loadSupplier($supplier_id)
     {
-        if ($this->selectedSupplierId && $this->supplier->isDirty())
-            $this->emit('supplierDirty', $supplier_id);
+        if ($this->selectedSupplierId && $this->supplier->isDirty()){
+            $this->emit('supplierDirty', $supplier_id);}
         else
             $this->loadSupplierConf($supplier_id);
     }

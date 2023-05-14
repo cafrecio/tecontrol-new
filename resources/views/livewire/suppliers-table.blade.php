@@ -8,7 +8,7 @@
         </div>
         <div class="card-body">
             <div class="form-group">
-                <input type="text" wire:model.defer="searchSupplier" class="form-control" placeholder="Buscar proveedor">
+                <input type="text" wire:model="searchSupplier" class="form-control" placeholder="Buscar proveedor">
             </div>
 
             <div style="overflow-y: scroll; max-height:calc(100vh - 250px);">
