@@ -359,14 +359,8 @@ return [
             
         ],
         [
-            'text'        => 'Cotización divisas',
-            'url'       => 'admin.cotizaciondiv.index',
-            'icon'        => 'fas fa-fw fa-dollar-sign',
-            
-        ],
-        [
             'text'        => 'Cotizaciones',
-            'url'       => 'admin.cotizaciones.index',
+            'route'       => 'admin.cotizaciones.index',
             'icon'        => 'fas fa-fw fa-dollar-sign',
             
         ],

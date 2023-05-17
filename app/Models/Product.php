@@ -28,7 +28,7 @@ class Product extends Model
 
     public function moneda()
     {
-        return $this->belongsTo(Currency::class);
+        return $this->belongsTo(Currency::class, 'moneda');
     }
 
     public function categoria()

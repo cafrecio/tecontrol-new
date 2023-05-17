@@ -36,5 +36,9 @@ class Client extends Model
             return $query->where('tipo_cliente', 'like', '%' . $request->input('tipo_cliente') . '%');
         });
     }
-    
+
+    public function quotations()
+    {
+        return $this->hasMany('App\Models\Quotation');
+    }
 }

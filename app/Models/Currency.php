@@ -11,7 +11,9 @@ class Currency extends Model
 
     protected $fillable = [
         'moneda',
-        'textoNota'
+        'textoNota',
+        'compra',
+        'venta',
     ];
 
     public function products()
