@@ -81,7 +81,8 @@
                     <td>{{ $cotizacion->quotationState->state }}</td>
                     <td>{{ $cotizacion->quotationPriority->priority }}</td>
                     <td style="white-space:nowrap">
-                        <button wire:click="edit({{ $cotizacion->id }})" class="btn btn-sm btn-primary">Editar</button>
+                        <a href="{{ route('admin.cotizaciones.edit', $cotizacion) }}"
+                            class="btn btn-sm btn-primary">Editar</a>
                         <button wire:click="destroy({{ $cotizacion->id }})"
                             class="btn btn-sm btn-danger">Eliminar</button>
                     </td>

@@ -15,6 +15,16 @@ class QuotationDetail extends Model
         return $this->belongsTo('App\Models\Quotation');
     }
 
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product');
+    }
+
+    public function currency()
+    {
+        return $this->belongsTo('App\Models\Currency');
+    }
+
     public static function updateAllCot()
     {
         $cotizaciones = new CotizacionBna();
