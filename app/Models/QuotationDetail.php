@@ -10,6 +10,17 @@ class QuotationDetail extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'quotation_id',
+        'product_id',
+        'currency_id',
+        'precio',
+        'cotizacion',
+        'cantidad',
+        'facturado',
+        'nroPedido'
+    ];
+
     public function quotation()
     {
         return $this->belongsTo('App\Models\Quotation');

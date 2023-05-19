@@ -5,7 +5,7 @@
 @section('title', 'Cotizaciones')
 
 @section('content_header')
-<h1>Cotizaciones</h1>
+<h1>&nbsp;Nueva Cotizacion</h1>
 @stop
 
 @section('content')

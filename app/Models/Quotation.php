@@ -29,6 +29,10 @@ class Quotation extends Model
         return $this->hasMany('App\Models\QuotationDetail');
     }
 
+    public function contact(){
+        return $this->belongsTo('App\Models\ClientsContact', 'contacto');
+    }
+
     public function total()
     {
         $total = 0;

@@ -9,24 +9,35 @@ use App\Models\QuotationPriority;
 use App\Models\QuotationType;
 use App\Models\Client;
 use App\Models\Product;
-use App\Models\QuotationDetail;
-use App\Models\Currency;
+use Livewire\WithFileUploads;
+use Illuminate\Support\Facades\Storage;
 
 class Edit extends Component
 {
+    use WithFileUploads;
+
     public $quotation;
     public $quotationStates;
     public $quotationPriorities;
     public $quotationTypes;
     public $clients;
     public $contacts;
-    public $products;
     public $currencies;
 
     public $searchTerm;
     public $total;
+    public $facturado;
 
     public $editDetalleId;
+    public $precio;
+    public $cantidad;
+
+
+    public $solicitudCotizacion;
+    public $cotizacion;
+    public $ordenCompra;
+
+    protected $listeners = ['calcTotal'];
 
     protected $rules = [
         'quotation.nro' => 'required|numeric',
@@ -51,17 +62,13 @@ class Edit extends Component
         'quotation.detalleContacto' => 'nullable'
     ];
 
+    
+
     public function render()
     {
         $this->contacts = $this->quotation->client_id ? Client::find($this->quotation->client_id)->client : [];
-        $this->products = Product::with('moneda')->search($this->searchTerm)->orderBy('descripcion_cotizacion')->get();
         
-        $total = 0;
-        foreach ($this->quotation->quotationDetails as $detail) {
-            $subtotal = $detail['precio'] * $detail['cantidad'] * $detail['cotizacion'];
-            $total += $subtotal;
-        }
-        $this->total = $total;
+        $this->calcTotal();
 
         return view('livewire.admin.quotation.edit');
     }
@@ -72,7 +79,50 @@ class Edit extends Component
         $this->quotationPriorities = QuotationPriority::all();
         $this->quotationTypes = QuotationType::all();
         $this->clients = Client::all();
-        $this->products = Product::all();
-        $this->currencies = Currency::all();
     }
+
+    public function calcTotal(){
+        $total = 0;
+        $facturado = 0;
+        foreach ($this->quotation->quotationDetails as $detail) {
+            $subtotal = $detail['precio'] * $detail['cantidad'] * $detail['cotizacion'];
+            $total += $subtotal;
+            $facturado += $subtotal * $detail['facturado'];
+        }
+        $this->total = $total;
+        $this->facturado = $facturado;
+    }
+
+    public function guardar(){
+        $this->validate();
+
+        if($this->solicitudCotizacion){
+            $rutaReal = realpath(storage_path('app/' . $this->quotation->solicitudCotizacion));
+            if($rutaReal && Storage::exists($rutaReal)){
+                Storage::delete($this->quotation->solicitudCotizacion);
+            }
+
+            $this->quotation->solicitudCotizacion = $this->solicitudCotizacion->store('solicitudCotizacion', 'public');
+        }
+
+        if($this->cotizacion){
+            $rutaReal = realpath(storage_path('app/' . $this->quotation->cotizacion));
+            if($rutaReal && Storage::exists($rutaReal)){
+                Storage::delete($this->quotation->cotizacion);
+            }
+
+            $this->quotation->cotizacion = $this->cotizacion->store('cotizacion', 'public');
+        }
+
+        if($this->ordenCompra){
+            if($this->quotation->ordenCompra && Storage::exists($this->quotation->ordenCompra))
+                Storage::delete($this->quotation->ordenCompra);
+            $this->quotation->ordenCompra = $this->ordenCompra->store('ordenCompra', 'public');
+        }
+
+        $this->quotation->save();
+        $this->emit('guardado');
+    }
+
+
 }

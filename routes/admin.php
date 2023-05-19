@@ -22,5 +22,6 @@ route::resource('proveedores', ProveedorController::class)->names('admin.supplie
 route::resource('mails', MailController::class)->names('admin.mails');
 route::resource('divisas', DivisaController::class)->names('admin.cotizaciondiv');
 route::resource('cotizaciones', CotizacionController::class)->names('admin.cotizaciones');
+Route::get('cotizaciones/{cotizacion}/print', [CotizacionController::class, 'print'])->name('admin.cotizaciones.print');
 route::resource('pedidos', PedidoController::class)->names('admin.pedidos');
 route::resource('stocks', StockController::class)->names('admin.stocks');

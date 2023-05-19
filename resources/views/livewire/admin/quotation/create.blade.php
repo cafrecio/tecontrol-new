@@ -3,12 +3,18 @@
         <div class="card-body">
             <div class="row">
                 <div class="col col-md-1">
-                    <label for="nro">Nro. Cotización</label>
+                    <label for="nro">Nro.</label>
                     <input type="text" wire:model="quotation.nro" class="form-control" placeholder="Nro. Cotización">
+                    @error('quotation.nro')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="col col-md-2">
                     <label for="fecha">Fecha</label>
                     <input type="date" wire:model="quotation.fecha" class="form-control" placeholder="Fecha">
+                    @error('quotation.fecha')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="col col-md-3">
                     <!--select for clientes-->
@@ -19,6 +25,9 @@
                         <option value="{{ $cliente->id }}">{{ $cliente->razon_social }}</option>
                         @endforeach
                     </select>
+                    @error('quotation.client_id')
+                        <small class="text-danger">{{ $message }}</small>
+                    @enderror
                 </div>
                 <div class="col col-md-2">
                     <!--select for quotationTypes-->
@@ -211,9 +220,10 @@
                 </div>
             </div>
         </div>
-        <div class="card-footer">
-            <button class="btn btn-primary" wire:click="guardar">Guardar</button>
-            <a href="{{ route('admin.cotizaciones.index') }}" class="btn btn-secondary">Cancelar</a>
+        <div class="card-footer text-right">
+            <button class="btn btn-success btn-sm" wire:click="guardar">Guardar</button>
+            <a href="{{ route('admin.cotizaciones.index') }}" class="btn btn-sm btn-secondary">Cancelar</a>
+            <button class="btn btn-danger" wire:click="print"><i class="fa fa-file-pdf"></i></button>
         </div>
     </div>
 

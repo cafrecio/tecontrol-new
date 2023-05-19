@@ -29,22 +29,13 @@
 @section('js')
 <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-        Livewire.on('clientDirty', clientId =>{
-                Swal.fire({
-                    title: 'Hay datos sin guardar. Querés Continuar?',
-                    text: "Se perderan los datos no guardados!",
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#d33',
-                    cancelButtonColor: '#3085d6',
-                    confirmButtonText: 'Si. Continuar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
-                    if (result.isConfirmed) {
-                        Livewire.emit('loadClientConf', clientId);
-                    }
-                })  
-            });
-    </script>
+<script>
+    Livewire.on('clientDirty', () => {
+                Swal.fire(
+                    'Good job!',
+                    'You clicked the button!',
+                    'success'
+                )});
+
+</script>
 @endsection

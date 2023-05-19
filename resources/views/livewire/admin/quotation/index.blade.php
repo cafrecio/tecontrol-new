@@ -85,6 +85,10 @@
                             class="btn btn-sm btn-primary">Editar</a>
                         <button wire:click="destroy({{ $cotizacion->id }})"
                             class="btn btn-sm btn-danger">Eliminar</button>
+                        <!-- a href print button with pdf icon-->
+                        <a href="{{ route('admin.cotizaciones.print', $cotizacion) }}" target="_blank"
+                            class="btn btn-secondary"><i class="fa fa-file-pdf"></i></a>
+
                     </td>
                 </tr>
                 @endforeach

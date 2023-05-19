@@ -113,7 +113,7 @@ class Create extends Component
 
     public function guardar()
     {
-        //$this->validate();
+        $this->validate();
 
         if($this->solicitudCotizacion){
             $this->quotation->solicitudCotizacion = $this->solicitudCotizacion->store('solicitudCotizacion', 'public');
@@ -142,5 +142,12 @@ class Create extends Component
         }
 
         return redirect()->route('admin.cotizaciones.index')->with('info', 'La cotización se creó con éxito');
+    }
+
+    public function print()
+    {
+        $this->guardar();
+        $url = route('admin.cotizaciones.print', $this->quotation);
+        return redirect()->to($url);
     }
 }
