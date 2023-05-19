@@ -83,8 +83,7 @@
             <div class="modal-content" style="max-height: 90vh; overflow: scroll;">
                 <div class="modal-header bg-dark text-white">
                     <h5 class="modal-title" id="productModalLabel">Productos</h5>
-                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close"
-                        wire:click="clearProduct">
+                    <button type="button" class="close text-white" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>

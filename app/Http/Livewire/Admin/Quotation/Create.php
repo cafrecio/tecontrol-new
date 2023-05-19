@@ -78,6 +78,7 @@ class Create extends Component
     public function render()
     {
         $this->contacts = $this->quotation->client_id ? Client::find($this->quotation->client_id)->client : [];
+        $this->quotation->condicion = $this->quotation->client_id ? Client::find($this->quotation->client_id)->condicion : '';
         $this->products = Product::with('moneda')->search($this->searchTerm)->orderBy('descripcion_cotizacion')->get();
         
         $total = 0;

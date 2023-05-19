@@ -14,6 +14,8 @@ class Currency extends Model
         'textoNota',
         'compra',
         'venta',
+        'divisacompra',
+        'divisaventa',
     ];
 
     public function products()

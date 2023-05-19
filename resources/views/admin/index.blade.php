@@ -31,7 +31,7 @@
             <div class="icon">
                 <i class="fas fa-fw fa-dollar-sign "></i>
             </div>
-            <a href="https://www.bna.com.ar/Personas" target="_blank" class="small-box-footer">Cotizacion BNA <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="https://www.bna.com.ar/Personas" target="_blank" class="small-box-footer">MONEDAS - Cotizacion BNA <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
     <!-- ./col -->
@@ -39,17 +39,29 @@
         <!-- small box -->
         <div class="small-box bg-success">
             <div class="inner">
-                <h3>53<sup style="font-size: 20px">%</sup></h3>
+                <div class="row">
+                    <div class="col">
+                        <span style="font-size: smaller;">Dolar Divisa Compra: </span>
+                        <h3>{{ number_format($cotizaciones->dolarDivisaCompra,2,",",".") }}</h3>
 
-                <p>Bounce Rate</p>
+                        <span style="font-size: smaller;">Euro Divisa Compra: </span>
+                        <h3>{{ number_format($cotizaciones->euroDivisaCompra,2,",",".") }}</h3>
+                    </div>
+                    <div class="col">
+                        <span style="font-size: smaller;">Dolar Divisa Venta: </span>
+                        <h3>{{ number_format($cotizaciones->dolarDivisaVenta,2,",",".") }}</h3>
+
+                        <span style="font-size: smaller;">Euro DIvisa Venta: </span>
+                        <h3>{{ number_format($cotizaciones->euroDivisaVenta,2,",",".") }}</h3>
+                    </div>
+                </div>
             </div>
             <div class="icon">
-                <i class="ion ion-stats-bars"></i>
+                <i class="fas fa-fw fa-dollar-sign "></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fas fa-arrow-circle-right"></i></a>
+            <a href="https://www.bna.com.ar/Personas#divisas" target="_blank" class="small-box-footer">DIVISAS - Cotizacion BNA <i class="fas fa-arrow-circle-right"></i></a>
         </div>
     </div>
-    <!-- ./col -->
     <div class="col-lg-3 col-6">
         <!-- small box -->
         <div class="small-box bg-warning">

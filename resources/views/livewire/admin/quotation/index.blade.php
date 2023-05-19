@@ -83,7 +83,7 @@
                     <td style="white-space:nowrap">
                         <a href="{{ route('admin.cotizaciones.edit', $cotizacion) }}"
                             class="btn btn-sm btn-primary">Editar</a>
-                        <button wire:click="destroy({{ $cotizacion->id }})"
+                        <button wire:click="$emit('deleteCot',{{ $cotizacion->id }})"
                             class="btn btn-sm btn-danger">Eliminar</button>
                         <!-- a href print button with pdf icon-->
                         <a href="{{ route('admin.cotizaciones.print', $cotizacion) }}" target="_blank"

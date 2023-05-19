@@ -18,6 +18,8 @@ class Index extends Component
     public $quotationStates;
     public $quotationPriorities;
     public $prioridad_id;
+
+    protected $listeners = ['deleteCotizacion'];
     
     public function mount($cliente_id = null){
         $this->cliente_id = $cliente_id;
@@ -50,5 +52,10 @@ class Index extends Component
 
 
         return view('livewire.admin.quotation.index');
+    }
+
+    public function deleteCotizacion($id){
+        $cotizacion = Quotation::find($id);
+        $cotizacion->delete();
     }
 }
