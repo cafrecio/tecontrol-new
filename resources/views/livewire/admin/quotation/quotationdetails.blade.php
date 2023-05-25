@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col">
                     <!--table for input quotationDetails-->
-                    <table class="table table-bordered">
+                    <table class="table table-striped">
                         <thead>
                             <tr>
                                 <th>Producto</th>
@@ -15,6 +15,7 @@
                                 <th>Cantidad</th>
                                 <th>Subtotal</th>
                                 <th>Facturado</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -122,7 +123,7 @@
     <div wire:loading>
         <div class="modload">
             <div class="spinload">
-                <i class="fa fa-spinner fa-spin"></i>
+                <i class="fa-solid fa-temperature-three-quarters fa-bounce2"></i>
             </div>
         </div>
     </div>

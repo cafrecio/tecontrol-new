@@ -27,6 +27,7 @@ class Edit extends Component
     public $searchTerm;
     public $total;
     public $facturado;
+    public $difFact;
 
     public $editDetalleId;
     public $precio;
@@ -81,7 +82,7 @@ class Edit extends Component
         $this->clients = Client::all();
     }
 
-    public function calcTotal(){
+    public function calcTotal($cambioFact = false){
         $total = 0;
         $facturado = 0;
         foreach ($this->quotation->quotationDetails as $detail) {
@@ -91,6 +92,22 @@ class Edit extends Component
         }
         $this->total = $total;
         $this->facturado = $facturado;
+        $factCarg = $this->quotation->quotationDocs->sum('monto');
+        $this->difFact = $facturado - $factCarg;
+
+        if($cambioFact){
+            if($this->quotation->quotationDetails->where('facturado', 1)->count() == 0){
+                $this->quotation->quotation_state_id = 3;
+            }
+            else{
+                if($this->quotation->quotationDetails->where('facturado', 1)->count() == $this->quotation->quotationDetails->count()){
+                    $this->quotation->quotation_state_id = 5;
+                }
+                else{
+                    $this->quotation->quotation_state_id = 4;
+                }
+            }    
+        }
     }
 
     public function guardar(){

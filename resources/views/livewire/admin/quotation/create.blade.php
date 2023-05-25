@@ -316,7 +316,7 @@
     <div wire:loading>
         <div class="modload">
             <div class="spinload">
-                <i class="fa fa-temperature fa-spin"></i>
+                <i class="fa-solid fa-temperature-three-quarters fa-bounce2"></i>
             </div>
         </div>
     </div>

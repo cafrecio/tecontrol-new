@@ -22,7 +22,15 @@ class Index extends Component
     protected $listeners = ['deleteCotizacion'];
     
     public function mount($cliente_id = null){
-        $this->cliente_id = $cliente_id;
+        if($cliente_id){
+            $this->cliente_id = $cliente_id;
+        }
+        else{
+            $this->cliente_id = session('cliente_id');
+            $this->estado_id = session('estado_id');
+            $this->prioridad_id = session('prioridad_id');
+            $this->finalizadas = session('finalizadas');
+        }
     }
     public function render()
     {   
@@ -50,6 +58,13 @@ class Index extends Component
         $this->quotationStates = QuotationState::all();
         $this->quotationPriorities = QuotationPriority::all();
 
+        session([
+            'cliente_id' => $this->cliente_id,
+            'estado_id' => $this->estado_id,
+            'prioridad_id' => $this->prioridad_id,
+            'finalizadas' => $this->finalizadas
+        ]);
+
 
         return view('livewire.admin.quotation.index');
     }
@@ -57,5 +72,12 @@ class Index extends Component
     public function deleteCotizacion($id){
         $cotizacion = Quotation::find($id);
         $cotizacion->delete();
+    }
+
+    public function borrarFiltros(){
+        $this->cliente_id = null;
+        $this->estado_id = null;
+        $this->prioridad_id = null;
+        $this->finalizadas = false;
     }
 }

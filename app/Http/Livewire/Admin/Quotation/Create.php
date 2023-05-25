@@ -12,6 +12,8 @@ use App\Models\Product;
 use App\Models\QuotationDetail;
 use App\Models\Currency;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Storage;
 
 class Create extends Component
 {
@@ -80,7 +82,7 @@ class Create extends Component
         $this->contacts = $this->quotation->client_id ? Client::find($this->quotation->client_id)->client : [];
         $this->quotation->condicion = $this->quotation->client_id ? Client::find($this->quotation->client_id)->condicion : '';
         $this->products = Product::with('moneda')->search($this->searchTerm)->orderBy('descripcion_cotizacion')->get();
-        
+
         $total = 0;
         foreach ($this->quotationDetails as $detail) {
             $subtotal = $detail['precio'] * $detail['cantidad'] * $detail['cotizacion'];
@@ -116,18 +118,27 @@ class Create extends Component
     {
         $this->validate();
 
-        if($this->solicitudCotizacion){
-            $this->quotation->solicitudCotizacion = $this->solicitudCotizacion->store('solicitudCotizacion', 'public');
+
+
+        if ($this->solicitudCotizacion) {
+            $year = Carbon::now()->year;
+            $date = Carbon::now()->format('Y-m-d');
+
+            $fileName = $date . '_' . $this->solicitudCotizacion->getClientOriginalName();
+            $path = $this->solicitudCotizacion->storeAs('public/' . $year, $fileName);
+            $this->quotation->solicitudCotizacion = Storage::url($path);
+
+            //$this->quotation->solicitudCotizacion = $this->solicitudCotizacion->store('solicitudCotizacion', 'public');
         }
 
-        if($this->cotizacion){
+        if ($this->cotizacion) {
             $this->quotation->cotizacion = $this->cotizacion->store('cotizacion', 'public');
         }
 
-        if($this->ordenCompra){
+        if ($this->ordenCompra) {
             $this->quotation->ordenCompra = $this->ordenCompra->store('ordenCompra', 'public');
         }
-        
+
         $this->quotation->save();
 
         foreach ($this->quotationDetails as $detail) {

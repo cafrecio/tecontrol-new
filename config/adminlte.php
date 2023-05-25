@@ -322,11 +322,16 @@ return [
             'label_color' => 'success',
         ],*/
 
-        ['header'=>'MENÚ PRINCIPAL'],
         [
             'text'        => 'Home',
             'url'         => 'admin',
             'icon'        => 'fas fa-tachometer-alt',
+        ],
+        [
+            'text'        => 'Calendario',
+            'route'       => 'admin.tasks.index',
+            'icon'        => 'fa fa-calendar',
+            
         ],
         [
             'text'        => 'Categorias',
@@ -369,6 +374,11 @@ return [
             'url'       => 'admin.pedidos.index',
             'icon'        => 'fas fa-fw fa-shopping-cart',
             
+        ],
+        [
+            'text'        => 'Documentos',
+            'route'       => 'admin.docs.index',
+            'icon'        => 'fas fa-fw fa-file-invoice-dollar',     
         ],
         [
             'text'        => 'Stock',

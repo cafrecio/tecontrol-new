@@ -45,9 +45,17 @@
                         <input wire:model="finalizadas" type="checkbox" class="form-control">
                     </div>
                 </div>
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <!--buton clean filters with eraser icon-->
+                        <button wire:click="borrarFiltros" class="btn btn-outline-secondary mt-4"><i
+                                class="fas fa-eraser"></i>Borrar Filtros</button>
+                    </div>
+                </div>
                 <div class="col text-right">
                     <!--button create route creat-->
-                    <a href="{{ route('admin.cotizaciones.create') }}" class="btn btn-success btn-sm">Nueva Cotización</a>
+                    <a href="{{ route('admin.cotizaciones.create') }}" class="btn btn-success btn-sm">Nueva
+                        Cotización</a>
                 </div>
             </div>
 
@@ -98,7 +106,7 @@
     <div wire:loading>
         <div class="modload">
             <div class="spinload">
-                <i class="fa fa-spinner fa-spin"></i>
+                <i class="fa-solid fa-temperature-three-quarters fa-bounce2"></i>
             </div>
         </div>
     </div>

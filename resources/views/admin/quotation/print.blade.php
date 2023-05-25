@@ -102,7 +102,7 @@
                     <p><b>TECONTROL S.R.L.</b></p>
                     <p>Navarro 822 - 1722 - Merlo</p>
                     <p>Buenos Aires - Argentina</p>
-                    <p>E-mail: martin@tec-control.com.ar</p>
+                    <p>E-mail: martin@tecontrol.com.ar</p>
                     <p>ventas@tec-control.com.ar</p>
                     <p>C.U.I.T.: 30-71167661-5</p>
                 </td>

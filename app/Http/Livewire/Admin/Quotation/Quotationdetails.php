@@ -47,7 +47,7 @@ class Quotationdetails extends Component
         QuotationDetail::find($detalle_id)->update(['facturado' => $facturado_val]);
         //dd($facturado_val, $detalle_id);
         //$this->emit('render');
-        $this->emit('calcTotal');
+        $this->emit('calcTotal', true);
     }
 
     public function deleteDetalle($detalle_id){

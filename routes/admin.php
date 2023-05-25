@@ -10,8 +10,10 @@ use App\Http\Controllers\Admin\ProveedorController;
 use App\Http\Controllers\Admin\MailController;
 use App\Http\Controllers\Admin\DivisaController;
 use App\Http\Controllers\Admin\CotizacionController;
+use App\Http\Controllers\Admin\DocController;
 use App\Http\Controllers\Admin\PedidoController;
 use App\Http\Controllers\Admin\StockController;
+use App\Http\Controllers\Admin\TaskController;
 
 route::get('', [HomeController::class, 'index'])->name('admin.home');
 route::resource('generales', GeneralController::class)->names('admin.generales');
@@ -19,6 +21,8 @@ route::resource('categorias', CategoriaController::class)->names('admin.categori
 route::resource('productos', ProductoController::class)->names('admin.products');
 route::resource('clientes', ClienteController::class)->names('admin.clients');
 route::resource('proveedores', ProveedorController::class)->names('admin.suppliers');
+route::resource('documentos', DocController::class)->names('admin.docs');
+route::resource('tareas', TaskController::class)->names('admin.tasks');
 route::resource('mails', MailController::class)->names('admin.mails');
 route::resource('divisas', DivisaController::class)->names('admin.cotizaciondiv');
 route::resource('cotizaciones', CotizacionController::class)->names('admin.cotizaciones');

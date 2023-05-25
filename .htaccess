@@ -1,0 +1,19 @@
+RewriteEngine On
+
+    # Verificar si el agente de usuario NO contiene las palabras "Mobile" o "Android" o "iPhone"
+    RewriteCond %{HTTP_USER_AGENT} !(Mobile|Android|iPhone) [NC]
+
+    # Redirigir a una página de acceso denegado si la condición anterior se cumple
+    RewriteRule ^ - [F,L]
+
+
+RewriteCond %{HTTPS} !=on
+RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301,NE]
+Header always set Content-Security-Policy "upgrade-insecure-requests;"
+
+RewriteCond %{REQUEST_URI} !^public
+RewriteCond %{REQUEST_URI} !^sorteos
+RewriteCond %{REQUEST_URI} !^/\.well-known/cpanel-dcv/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/(?:\ Ballot169)?
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+RewriteRule ^(.*)$ public/$1 [L]
