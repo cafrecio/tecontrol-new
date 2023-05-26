@@ -47,6 +47,7 @@
             },
 
             dateClick: function(info) {
+                Livewire.emit('setFecha', info.dateStr);
                 $('#tarea').modal('show');
             },
 
@@ -55,15 +56,10 @@
 
           calendar.render();
           
-          Livewire.on('cerrarModal', function() {
-                $('#tarea').modal('hide');
-                calendar.refetchEvents();
+          Livewire.on('cerrarModal', function(task) {
+            $('#tarea').modal('hide');
             });
-
         });
   
-</script>
-<script>
-
 </script>
 @endpush

@@ -14,5 +14,6 @@ class Task extends Model
         'fecha_inicio',
         'fecha_fin',
         'check',
+        'color'
     ];
 }

@@ -8,22 +8,23 @@ use App\Models\Task;
 class Taskform extends Component
 {
     public $task;
+    public $selectedColor;
+
+    protected $listeners = ['setFecha'];
 
     protected $rules = [
         'task.tarea' => 'required',
         'task.fecha_ini' => 'required|date',
         'task.fecha_fin' => 'required|date|after_or_equal:task.fecha_ini',
         'task.check' => 'nullable',
+        'task.color' => 'nullable'
     ];
 
     public function mount(Task $task = null){
-        if($task){
-            $this->task = $task;
-        }
-        else{
-            $this->task = new Task();
-        }
+        $this->task = $task;
+         $this->task->color="#007bff";
     }
+    
     public function render()
     {
         return view('livewire.admin.task.taskform');
@@ -33,7 +34,12 @@ class Taskform extends Component
         
         $this->validate();
         $this->task->save();
-        $this->emit('cerrarModal');
+        $this->emit('cerrarModal', $this->task);
         
+    }
+
+    public function setFecha($fecha){
+        $this->task->fecha_ini = $fecha;
+        $this->task->fecha_fin = $fecha;
     }
 }
