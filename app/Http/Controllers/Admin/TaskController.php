@@ -24,6 +24,7 @@ class TaskController extends Controller
                     'title' => $task->tarea,
                     'start' => $task->fecha_ini,
                     'end' => $fechFin,
+                    'color' => $task->color,
                 ];
         }
         return view('admin.tasks.index', compact('events'));

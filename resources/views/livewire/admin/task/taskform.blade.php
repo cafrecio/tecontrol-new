@@ -55,7 +55,27 @@
                                 </div>
                             </div>
                         </div>
+
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="color">Color:</label>
+                                <select wire:model="task.color" name="color" id="color" class="form-control"
+                                    style="background-color: {{ $task->color }}">
+                                    <option value="#007bff" class="color-option" style="background-color:#007bff;">
+                                    </option>
+                                    <option value="#e83e8c" class="color-option" style="background-color: #e83e8c">
+                                    </option>
+                                    <option value="#fd7e14" class="color-option" style="background-color: #fd7e14"
+                                        onmouseover="this.style.backgroundColor='#fd7e14'"></option>
+                                    <option value="#28a745" class="color-option" style="background-color: #28a745">
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
                     </div>
+
+
+
                 </form>
             </div>
             <div class="modal-footer">
